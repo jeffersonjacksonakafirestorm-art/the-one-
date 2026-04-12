@@ -17,297 +17,324 @@ export default function Home() {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-          background: #f8f8f8;
-          color: #222;
+          background: #f5f5f5;
+          color: #111;
           font-family: 'Inter Tight', system-ui, sans-serif;
           -webkit-font-smoothing: antialiased;
         }
 
+        /* NAV */
         .nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           display: flex; align-items: center; justify-content: space-between;
-          padding: 0 52px; height: 64px;
-          background: rgba(248,248,248,0.9);
-          backdrop-filter: blur(12px);
+          padding: 0 48px; height: 58px;
+          background: rgba(245,245,245,0.95);
+          backdrop-filter: blur(8px);
           border-bottom: 1px solid transparent;
           transition: border-color 0.2s;
         }
-        .nav.scrolled { border-bottom-color: #e8e8e8; }
-        .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.5px; text-decoration: none; color: #111; }
+        .nav.scrolled { border-bottom-color: #ddd; }
+        .nav-logo { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: #111; }
         .nav-logo span { color: #6c47ff; }
-        .nav-right { display: flex; align-items: center; gap: 32px; }
-        .nav-link { font-size: 14px; color: #777; text-decoration: none; font-weight: 400; }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .nav-link { font-size: 13px; color: #888; text-decoration: none; }
         .nav-link:hover { color: #111; }
-        .btn {
-          display: inline-block; text-decoration: none;
-          font-family: 'Inter Tight', system-ui, sans-serif;
-          font-weight: 500; cursor: pointer; border: none;
-          transition: all 0.15s;
-        }
-        .btn-dark {
+        .btn-cta {
           background: #111; color: #fff;
-          padding: 10px 20px; font-size: 14px; border-radius: 6px;
+          padding: 9px 18px; font-size: 13px; font-weight: 600;
+          border-radius: 4px; text-decoration: none;
+          font-family: 'Inter Tight', system-ui, sans-serif;
+          display: inline-block; transition: background 0.15s;
+          border: none; cursor: pointer;
         }
-        .btn-dark:hover { background: #000; }
-        .btn-ghost {
-          background: transparent; color: #444;
-          padding: 10px 20px; font-size: 14px; border-radius: 6px;
-          border: 1.5px solid #ddd;
+        .btn-cta:hover { background: #000; }
+        .btn-outline {
+          background: transparent; color: #555;
+          padding: 9px 18px; font-size: 13px; font-weight: 500;
+          border-radius: 4px; text-decoration: none;
+          font-family: 'Inter Tight', system-ui, sans-serif;
+          display: inline-block; border: 1.5px solid #ccc;
+          transition: all 0.15s; cursor: pointer;
         }
-        .btn-ghost:hover { border-color: #aaa; color: #111; }
+        .btn-outline:hover { border-color: #888; color: #111; }
 
+        /* HERO */
         .hero {
           min-height: 100vh;
           display: flex; flex-direction: column;
           align-items: center; justify-content: center;
           text-align: center;
-          padding: 120px 24px 80px;
-        }
-        .hero-pill {
-          display: inline-flex; align-items: center; gap: 8px;
-          background: #fff; border: 1px solid #e8e8e8; border-radius: 100px;
-          padding: 6px 14px 6px 8px;
-          font-size: 12px; font-weight: 500; color: #666;
-          margin-bottom: 48px; letter-spacing: 0.01em;
-        }
-        .hero-pill-dot {
-          width: 20px; height: 20px; border-radius: 50%;
-          background: #6c47ff1a; display: flex; align-items: center; justify-content: center;
-        }
-        .hero-pill-dot::after {
-          content: ''; width: 7px; height: 7px;
-          background: #6c47ff; border-radius: 50%;
+          padding: 100px 24px 60px;
+          border-bottom: 1px solid #ddd;
         }
         .hero-h1 {
-          font-size: clamp(52px, 8.5vw, 100px);
+          font-size: clamp(60px, 10vw, 120px);
           font-weight: 800;
-          line-height: 0.95;
-          letter-spacing: -0.045em;
+          line-height: 0.92;
+          letter-spacing: -0.05em;
           color: #0a0a0a;
-          max-width: 860px;
-          margin-bottom: 32px;
+          max-width: 900px;
+          margin-bottom: 28px;
         }
         .hero-sub {
-          font-size: 18px; font-weight: 400;
-          color: #777; line-height: 1.65;
-          max-width: 440px; margin-bottom: 52px;
+          font-size: 17px; font-weight: 400;
+          color: #666; line-height: 1.6;
+          max-width: 400px; margin-bottom: 40px;
         }
         .hero-ctas {
-          display: flex; align-items: center; gap: 12px;
-          justify-content: center; margin-bottom: 16px;
+          display: flex; align-items: center; gap: 10px;
+          justify-content: center; margin-bottom: 14px;
         }
-        .hero-ctas .btn-dark { padding: 14px 28px; font-size: 15px; border-radius: 8px; }
-        .hero-ctas .btn-ghost { padding: 14px 28px; font-size: 15px; border-radius: 8px; }
-        .hero-fine { font-size: 12px; color: #bbb; }
+        .hero-ctas .btn-cta { padding: 13px 28px; font-size: 15px; border-radius: 5px; }
+        .hero-ctas .btn-outline { padding: 13px 28px; font-size: 15px; border-radius: 5px; }
+        .hero-fine { font-size: 11px; color: #bbb; letter-spacing: 0.02em; }
 
-        .convo-section {
-          width: 100%; max-width: 420px;
-          margin-top: 80px;
+        /* CONVO */
+        .convo-wrap {
+          margin-top: 64px; width: 100%; max-width: 400px;
         }
-        .convo-label {
-          font-size: 11px; color: #bbb;
-          letter-spacing: 0.08em; text-transform: uppercase;
-          margin-bottom: 16px; text-align: center;
+        .convo-tag {
+          font-size: 10px; font-weight: 600; color: #bbb;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          margin-bottom: 12px; text-align: center;
         }
-        .convo-card {
-          background: #fff; border: 1px solid #e8e8e8;
-          border-radius: 20px; padding: 24px;
-          display: flex; flex-direction: column; gap: 10px;
-          box-shadow: 0 2px 24px rgba(0,0,0,0.04);
+        .convo {
+          background: #fff; border: 1px solid #ddd;
+          border-radius: 12px; padding: 20px;
+          display: flex; flex-direction: column; gap: 8px;
         }
-        .convo-time {
-          font-size: 11px; color: #bbb; text-align: center; margin-bottom: 4px;
-        }
+        .convo-ts { font-size: 10px; color: #ccc; text-align: center; margin-bottom: 2px; }
         .msg { display: flex; }
         .msg.r { justify-content: flex-end; }
-        .bubble {
-          padding: 10px 14px; border-radius: 16px;
-          font-size: 14px; line-height: 1.5; max-width: 82%;
+        .bub {
+          padding: 9px 13px; border-radius: 14px;
+          font-size: 13px; line-height: 1.5; max-width: 80%;
         }
-        .bubble.ai { background: #f0f0f0; color: #222; border-bottom-left-radius: 4px; }
-        .bubble.user { background: #6c47ff; color: #fff; border-bottom-right-radius: 4px; }
+        .bub.a { background: #ebebeb; color: #111; border-bottom-left-radius: 3px; }
+        .bub.u { background: #6c47ff; color: #fff; border-bottom-right-radius: 3px; }
 
-        .rule { width: 100%; height: 1px; background: #e8e8e8; }
+        /* STRIP */
+        .strip {
+          display: grid; grid-template-columns: repeat(3,1fr);
+          border-bottom: 1px solid #ddd;
+        }
+        .strip-item {
+          padding: 40px 48px;
+          border-right: 1px solid #ddd;
+        }
+        .strip-item:last-child { border-right: none; }
+        .strip-num {
+          font-size: 10px; font-weight: 700; color: #bbb;
+          letter-spacing: 0.12em; text-transform: uppercase;
+          margin-bottom: 28px;
+        }
+        .strip-h {
+          font-size: 18px; font-weight: 700;
+          letter-spacing: -0.025em; color: #111;
+          line-height: 1.2; margin-bottom: 10px;
+        }
+        .strip-p { font-size: 13px; color: #777; line-height: 1.7; }
 
-        .section {
+        /* SETUP */
+        .setup {
           max-width: 1160px; margin: 0 auto;
-          padding: 120px 52px;
+          padding: 80px 48px;
+          border-bottom: 1px solid #ddd;
         }
+        .setup-head { margin-bottom: 56px; }
         .eyebrow {
-          font-size: 11px; font-weight: 600; color: #aaa;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          margin-bottom: 24px;
+          font-size: 10px; font-weight: 700; color: #bbb;
+          letter-spacing: 0.12em; text-transform: uppercase;
+          margin-bottom: 16px;
         }
-        .section-h {
-          font-size: clamp(36px, 5vw, 58px);
-          font-weight: 800; line-height: 1.0;
-          letter-spacing: -0.035em; color: #0a0a0a;
-          max-width: 680px; margin-bottom: 20px;
+        .big-h {
+          font-size: clamp(38px, 5vw, 60px);
+          font-weight: 800; line-height: 0.97;
+          letter-spacing: -0.04em; color: #0a0a0a;
+          margin-bottom: 16px;
         }
-        .section-p {
-          font-size: 17px; color: #777;
-          line-height: 1.65; max-width: 480px;
-          margin-bottom: 64px;
-        }
+        .big-p { font-size: 16px; color: #777; line-height: 1.6; max-width: 440px; }
 
-        .cards {
-          display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
-          border: 1px solid #e8e8e8; border-radius: 16px; overflow: hidden;
+        .steps {}
+        .step {
+          display: grid; grid-template-columns: 60px 1fr;
+          padding: 32px 0; border-top: 1px solid #ddd;
         }
-        .card { background: #fff; padding: 40px 36px; border-right: 1px solid #e8e8e8; }
-        .card:last-child { border-right: none; }
-        .card-num { font-size: 11px; font-weight: 600; color: #bbb; letter-spacing: 0.1em; margin-bottom: 36px; }
-        .card-h { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: #111; line-height: 1.25; margin-bottom: 12px; }
-        .card-p { font-size: 14px; color: #777; line-height: 1.7; }
+        .step:last-child { border-bottom: 1px solid #ddd; }
+        .step-n {
+          font-size: 11px; font-weight: 700; color: #ccc;
+          letter-spacing: 0.08em; padding-top: 4px;
+        }
+        .step-h {
+          font-size: 20px; font-weight: 700;
+          letter-spacing: -0.025em; color: #111; margin-bottom: 8px;
+        }
+        .step-p { font-size: 14px; color: #777; line-height: 1.65; max-width: 540px; }
 
-        .steps { border-top: 1px solid #e8e8e8; }
-        .step { display: grid; grid-template-columns: 72px 1fr; padding: 40px 0; border-bottom: 1px solid #e8e8e8; }
-        .step-n { font-size: 12px; font-weight: 600; color: #bbb; padding-top: 3px; letter-spacing: 0.05em; }
-        .step-h { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: #111; margin-bottom: 10px; }
-        .step-p { font-size: 15px; color: #777; line-height: 1.65; max-width: 560px; }
-
-        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .price-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 20px; padding: 52px; }
-        .price-num { font-size: 80px; font-weight: 800; letter-spacing: -0.05em; color: #0a0a0a; line-height: 1; }
-        .price-unit { font-size: 15px; color: #aaa; margin-top: 6px; margin-bottom: 44px; }
-        .features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
-        .features li { font-size: 15px; color: #444; display: flex; align-items: center; gap: 12px; }
-        .tick { color: #6c47ff; font-size: 15px; }
-        .price-cta {
+        /* PRICING */
+        .pricing {
+          display: grid; grid-template-columns: 1fr 1fr;
+          border-bottom: 1px solid #ddd;
+        }
+        .pricing-l {
+          padding: 80px 48px;
+          border-right: 1px solid #ddd;
+        }
+        .pricing-r { padding: 80px 48px; }
+        .price-big {
+          font-size: 96px; font-weight: 800;
+          letter-spacing: -0.06em; color: #0a0a0a;
+          line-height: 1; margin-top: 32px;
+        }
+        .price-mo { font-size: 14px; color: #aaa; margin-top: 4px; margin-bottom: 40px; }
+        .feat-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+        .feat-list li { font-size: 14px; color: #444; display: flex; align-items: center; gap: 10px; }
+        .tick { color: #6c47ff; font-weight: 700; }
+        .price-btn {
           display: block; width: 100%; text-align: center;
-          background: #111; color: #fff; padding: 16px;
-          border-radius: 8px; font-size: 15px; font-weight: 500;
-          text-decoration: none; font-family: 'Inter Tight', system-ui, sans-serif;
-          transition: background 0.15s;
-        }
-        .price-cta:hover { background: #000; }
-        .price-note { font-size: 12px; color: #bbb; text-align: center; margin-top: 14px; }
-
-        .faq-list { border-top: 1px solid #e8e8e8; }
-        .faq-row { padding: 28px 0; border-bottom: 1px solid #e8e8e8; }
-        .faq-q { font-size: 17px; font-weight: 600; color: #111; margin-bottom: 10px; letter-spacing: -0.01em; }
-        .faq-a { font-size: 15px; color: #777; line-height: 1.7; max-width: 640px; }
-
-        .cta-band { background: #0a0a0a; padding: 140px 52px; text-align: center; }
-        .cta-band-h {
-          font-size: clamp(42px, 7vw, 80px);
-          font-weight: 800; color: #fff;
-          letter-spacing: -0.045em; line-height: 0.95;
-          margin-bottom: 24px;
-        }
-        .cta-band-p { font-size: 17px; color: rgba(255,255,255,0.4); margin-bottom: 52px; }
-        .cta-band .btn-light {
-          background: #fff; color: #111;
-          padding: 16px 36px; font-size: 16px;
-          border-radius: 8px; font-weight: 600;
-          display: inline-block; text-decoration: none;
+          background: #111; color: #fff; padding: 15px;
+          border-radius: 5px; font-size: 14px; font-weight: 600;
+          text-decoration: none;
           font-family: 'Inter Tight', system-ui, sans-serif;
           transition: background 0.15s;
         }
-        .cta-band .btn-light:hover { background: #eee; }
+        .price-btn:hover { background: #000; }
+        .price-fine { font-size: 11px; color: #bbb; text-align: center; margin-top: 12px; }
 
-        .footer {
-          border-top: 1px solid #e8e8e8; padding: 36px 52px;
-          display: flex; align-items: center; justify-content: space-between;
+        /* FAQ */
+        .faq {
+          max-width: 1160px; margin: 0 auto;
+          padding: 80px 48px;
+          border-bottom: 1px solid #ddd;
         }
-        .footer-logo { font-size: 15px; font-weight: 700; color: #111; text-decoration: none; }
+        .faq-list {}
+        .faq-row { padding: 24px 0; border-top: 1px solid #ddd; }
+        .faq-row:last-child { border-bottom: 1px solid #ddd; }
+        .faq-q { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 8px; letter-spacing: -0.01em; }
+        .faq-a { font-size: 14px; color: #777; line-height: 1.7; max-width: 600px; }
+
+        /* BOTTOM */
+        .bottom {
+          background: #0a0a0a; padding: 120px 48px;
+          text-align: center;
+        }
+        .bottom-h {
+          font-size: clamp(48px, 8vw, 96px);
+          font-weight: 800; color: #fff;
+          letter-spacing: -0.05em; line-height: 0.92;
+          margin-bottom: 48px;
+        }
+        .bottom .btn-white {
+          background: #fff; color: #111;
+          padding: 15px 36px; font-size: 15px; font-weight: 700;
+          border-radius: 5px; display: inline-block;
+          text-decoration: none;
+          font-family: 'Inter Tight', system-ui, sans-serif;
+          transition: background 0.15s;
+        }
+        .bottom .btn-white:hover { background: #eee; }
+
+        /* FOOTER */
+        .footer {
+          padding: 28px 48px;
+          display: flex; align-items: center; justify-content: space-between;
+          border-top: 1px solid #ddd;
+        }
+        .footer-logo { font-size: 14px; font-weight: 800; color: #111; text-decoration: none; }
         .footer-logo span { color: #6c47ff; }
-        .footer-links { display: flex; gap: 28px; }
-        .footer-link { font-size: 13px; color: #aaa; text-decoration: none; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-link { font-size: 12px; color: #aaa; text-decoration: none; }
         .footer-link:hover { color: #333; }
-        .footer-copy { font-size: 12px; color: #ccc; }
+        .footer-copy { font-size: 11px; color: #ccc; }
 
         @media (max-width: 768px) {
           .nav { padding: 0 20px; }
-          .section { padding: 80px 20px; }
-          .cards { grid-template-columns: 1fr; }
-          .card { border-right: none; border-bottom: 1px solid #e8e8e8; }
-          .card:last-child { border-bottom: none; }
-          .step { grid-template-columns: 48px 1fr; }
-          .pricing-grid { grid-template-columns: 1fr; gap: 48px; }
-          .footer { flex-direction: column; gap: 20px; text-align: center; }
+          .hero-h1 { font-size: clamp(48px, 12vw, 72px); }
+          .strip { grid-template-columns: 1fr; }
+          .strip-item { border-right: none; border-bottom: 1px solid #ddd; }
+          .strip-item:last-child { border-bottom: none; }
+          .setup { padding: 60px 20px; }
+          .step { grid-template-columns: 44px 1fr; }
+          .pricing { grid-template-columns: 1fr; }
+          .pricing-l { border-right: none; border-bottom: 1px solid #ddd; padding: 60px 20px; }
+          .pricing-r { padding: 60px 20px; }
+          .faq { padding: 60px 20px; }
+          .bottom { padding: 80px 20px; }
+          .footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px 20px; }
           .footer-links { flex-wrap: wrap; justify-content: center; }
-          .cta-band { padding: 80px 20px; }
         }
       `}</style>
 
+      {/* NAV */}
       <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
         <a href="/" className="nav-logo">CallRecover<span>AI</span></a>
         <div className="nav-right">
           <a href="/login" className="nav-link">Sign In</a>
-          <a href="/signup" className="btn btn-dark">Start Free Trial</a>
+          <a href="/signup" className="btn-cta">Start Free Trial</a>
         </div>
       </nav>
 
+      {/* HERO */}
       <section className="hero">
-        <div className="hero-pill">
-          <span className="hero-pill-dot" />
-          30 seconds. Every missed call. Every time.
-        </div>
-        <h1 className="hero-h1">Every missed call<br />is a job you didn't get.</h1>
+        <h1 className="hero-h1">Every missed call<br />is a job you<br />didn't get.</h1>
         <p className="hero-sub">
           Someone just called your business. You didn't answer.
-          We texted them back in 30 seconds. They're still talking to you right now.
+          We texted them back in 30 seconds.
+          They're still talking to you right now.
         </p>
         <div className="hero-ctas">
-          <a href="/signup" className="btn btn-dark">Start Free Trial</a>
-          <a href="#how-it-works" className="btn btn-ghost">See how it works</a>
+          <a href="/signup" className="btn-cta">Start Free Trial</a>
+          <a href="#setup" className="btn-outline">See how it works</a>
         </div>
-        <p className="hero-fine">$225/mo &middot; No contracts &middot; Cancel anytime</p>
-
-        <div className="convo-section">
-          <p className="convo-label">Happening right now while you're on the job</p>
-          <div className="convo-card">
-            <p className="convo-time">Delivered &middot; 28 seconds ago</p>
+        <p className="hero-fine">$225/mo &nbsp;&middot;&nbsp; No contracts &nbsp;&middot;&nbsp; Cancel anytime</p>
+        <div className="convo-wrap">
+          <p className="convo-tag">Happening right now while you're on the job</p>
+          <div className="convo">
+            <p className="convo-ts">Delivered &middot; 28 seconds ago</p>
             <div className="msg">
-              <div className="bubble ai">Hey, sorry we missed your call — this is Pacific Roofing. How can we help you today?</div>
+              <div className="bub a">Hey, sorry we missed your call — this is Pacific Roofing. How can we help?</div>
             </div>
             <div className="msg r">
-              <div className="bubble user">Hi, I need a quote for a roof replacement</div>
+              <div className="bub u">Hi, I need a quote for a roof replacement</div>
             </div>
             <div className="msg">
-              <div className="bubble ai">We'd love to help. What's your address and when are you looking to get started?</div>
+              <div className="bub a">We'd love to help. What's your address and when are you looking to start?</div>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="rule" />
-
-      <div className="section" style={{paddingBottom: 0}}>
-        <p className="eyebrow">What you get</p>
-      </div>
-      <div className="section" style={{paddingTop: 40}}>
-        <div className="cards">
-          <div className="card">
-            <p className="card-num">01</p>
-            <h3 className="card-h">Missed call text-back</h3>
-            <p className="card-p">You miss the call. 30 seconds later they get a text. AI handles the whole conversation. By the time you check your phone, the lead is qualified and waiting.</p>
-          </div>
-          <div className="card">
-            <p className="card-num">02</p>
-            <h3 className="card-h">Voicemail transcription</h3>
-            <p className="card-p">No more listening to 2-minute voicemails. Every message gets transcribed and sent to you as text. Read it in two seconds. Move on.</p>
-          </div>
-          <div className="card">
-            <p className="card-num">03</p>
-            <h3 className="card-h">Weekly revenue report</h3>
-            <p className="card-p">Every week you see what you would have lost and what we recovered. That number makes it impossible to cancel.</p>
-          </div>
+      {/* THREE STRIP */}
+      <div className="strip">
+        <div className="strip-item">
+          <p className="strip-num">01</p>
+          <h3 className="strip-h">Missed call text-back</h3>
+          <p className="strip-p">You miss the call. 30 seconds later they get a text. AI handles the whole conversation. Lead qualified before you even check your phone.</p>
+        </div>
+        <div className="strip-item">
+          <p className="strip-num">02</p>
+          <h3 className="strip-h">Voicemail transcription</h3>
+          <p className="strip-p">No more listening to 2-minute voicemails. Every message transcribed and sent to you as text. Two seconds to read. Move on.</p>
+        </div>
+        <div className="strip-item">
+          <p className="strip-num">03</p>
+          <h3 className="strip-h">Weekly revenue report</h3>
+          <p className="strip-p">Every week: calls missed, leads recovered, revenue saved. That number makes it impossible to cancel.</p>
         </div>
       </div>
 
-      <div className="rule" />
-
-      <section className="section" id="how-it-works">
-        <p className="eyebrow">Setup</p>
-        <h2 className="section-h">Ten minutes.<br />Then forget about it.</h2>
-        <p className="section-p">Dial one code. Done. Your number doesn't change. Nothing in your business changes. Except the missed calls start getting answered.</p>
+      {/* SETUP */}
+      <div className="setup" id="setup">
+        <div className="setup-head">
+          <p className="eyebrow">Setup</p>
+          <h2 className="big-h">Ten minutes.<br />Then forget about it.</h2>
+          <p className="big-p">Dial one code. Done. Your number doesn't change. Nothing changes. Except missed calls start getting answered.</p>
+        </div>
         <div className="steps">
           {[
-            ['01', 'You sign up. We give you a number.', 'Two minutes. You get a dedicated CallRecoverAI number assigned to your business. That\'s your AI line.'],
+            ['01', 'You sign up. We give you a number.', 'Two minutes. You get a dedicated CallRecoverAI number assigned to your business.'],
             ['02', 'One code on your phone.', 'Forward missed calls to your CallRecoverAI number. 30 seconds. Your main number stays exactly the same.'],
-            ['03', 'AI takes it from here.', 'Miss a call → customer gets a text in 30 seconds → AI qualifies them → you get a notification. Log in whenever to review every conversation.'],
+            ['03', 'AI takes it from here.', 'Miss a call → customer texted in 30 seconds → AI qualifies the lead → you get notified. Review every conversation whenever you want.'],
           ].map(([n, h, p]) => (
             <div className="step" key={n}>
               <span className="step-n">{n}</span>
@@ -318,50 +345,46 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      <div className="rule" />
-
-      <section className="section" id="pricing">
-        <div className="pricing-grid">
-          <div>
-            <p className="eyebrow">Pricing</p>
-            <h2 className="section-h">One price.<br />No surprises.</h2>
-            <p className="section-p">One missed job pays for six months. Most owners see it pay for itself in the first week.</p>
-          </div>
-          <div className="price-card">
-            <div className="price-num">$225</div>
-            <p className="price-unit">per month</p>
-            <ul className="features">
-              {[
-                'Instant missed call text-back',
-                'AI lead qualification conversations',
-                'Voicemail transcription',
-                'Business owner dashboard',
-                'Weekly revenue recovery report',
-                'Unlimited conversations',
-              ].map(f => (
-                <li key={f}><span className="tick">✓</span>{f}</li>
-              ))}
-            </ul>
-            <a href="/signup" className="price-cta">Start Free Trial</a>
-            <p className="price-note">Free trial · No credit card required · Cancel anytime</p>
-          </div>
+      {/* PRICING */}
+      <div className="pricing" id="pricing">
+        <div className="pricing-l">
+          <p className="eyebrow">Pricing</p>
+          <h2 className="big-h">One price.<br />No surprises.</h2>
+          <p className="big-p">One missed job pays for six months. Most owners see it pay for itself in the first week.</p>
+          <div className="price-big">$225</div>
+          <p className="price-mo">per month</p>
         </div>
-      </section>
+        <div className="pricing-r">
+          <p className="eyebrow" style={{marginBottom: 32}}>What's included</p>
+          <ul className="feat-list">
+            {[
+              'Instant missed call text-back',
+              'AI lead qualification conversations',
+              'Voicemail transcription',
+              'Business owner dashboard',
+              'Weekly revenue recovery report',
+              'Unlimited conversations',
+            ].map(f => (
+              <li key={f}><span className="tick">✓</span>{f}</li>
+            ))}
+          </ul>
+          <a href="/signup" className="price-btn">Start Free Trial</a>
+          <p className="price-fine">Free trial · No credit card required · Cancel anytime</p>
+        </div>
+      </div>
 
-      <div className="rule" />
-
-      <section className="section" id="faq">
-        <p className="eyebrow">FAQ</p>
-        <h2 className="section-h" style={{marginBottom: 56}}>Before you ask.</h2>
+      {/* FAQ */}
+      <div className="faq" id="faq">
+        <p className="eyebrow" style={{marginBottom: 40}}>Before you ask.</p>
         <div className="faq-list">
           {[
-            ['Does my phone number change?', 'No. Your main number stays exactly the same. You just forward missed calls to your CallRecoverAI number. Takes 30 seconds to set up.'],
-            ['What does the AI say to my customers?', 'Whatever you want it to. During signup you set your business name, industry, and tone. It introduces itself as your business. You review every conversation in your dashboard.'],
-            ['What if a customer replies?', 'AI keeps the conversation going — gets their name, what they need, best time to reach them. You get a notification. Everything\'s in your dashboard when you\'re ready.'],
-            ['Is there a contract?', 'No. Month to month. Cancel in one click from your dashboard whenever you want.'],
-            ['What happens when I cancel?', 'Your number stays active until the end of the billing period. After that it stops. No charges, no hassle.'],
+            ['Does my phone number change?', 'No. Your main number stays exactly the same. You just forward missed calls to your CallRecoverAI number. 30 seconds to set up.'],
+            ['What does the AI say?', 'Whatever you tell it to. You set your business name, industry, and tone during signup. It introduces itself as your business. Every conversation is in your dashboard.'],
+            ['What if a customer replies?', 'AI keeps going — gets their name, what they need, best time to reach them. You get a notification. Everything is waiting for you when you check in.'],
+            ['Is there a contract?', 'No. Month to month. Cancel from your dashboard in one click.'],
+            ['What happens when I cancel?', 'Active until the end of your billing period. Then it stops. No charges, no hassle.'],
           ].map(([q, a]) => (
             <div className="faq-row" key={q}>
               <p className="faq-q">{q}</p>
@@ -369,14 +392,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
-
-      <div className="cta-band">
-        <h2 className="cta-band-h">Stop leaving<br />money on the table.</h2>
-        <p className="cta-band-p">Try it free. If you don\'t recover a lead in your first week, you shouldn\'t be paying for it.</p>
-        <a href="/signup" className="btn-light">Start Free Trial</a>
       </div>
 
+      {/* BOTTOM */}
+      <div className="bottom">
+        <h2 className="bottom-h">Stop leaving<br />money on the table.</h2>
+        <a href="/signup" className="btn-white">Start Free Trial</a>
+      </div>
+
+      {/* FOOTER */}
       <footer className="footer">
         <a href="/" className="footer-logo">CallRecover<span>AI</span></a>
         <div className="footer-links">
