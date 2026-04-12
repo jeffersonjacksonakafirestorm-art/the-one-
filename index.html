@@ -37,33 +37,156 @@
   <!-- HERO -->
   <section class="hero">
     <canvas id="hero-canvas"></canvas>
-    <div class="hero-content">
-      <div class="hero-pill">
-        <span class="hero-pill-dot"></span>
-        127 businesses recovering leads live right now
-      </div>
-      <h1>Miss a Call.<br /><span class="highlight">They're Texted Back in 30 Seconds.</span></h1>
-      <p class="hero-sub">
-        Our AI instantly contacts every missed caller — qualifying leads and booking jobs automatically. One saved call pays for months.
-      </p>
-      <div class="hero-actions">
-        <a href="#signup" class="btn btn-primary btn-lg btn-shimmer">Add Your Business Number</a>
-        <a href="#how" class="btn btn-ghost btn-lg">See How It Works &#8594;</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <strong>30–50%</strong>
-          <span>of calls go unanswered</span>
+    <div class="hero-split">
+      <!-- LEFT: Text + CTAs -->
+      <div class="hero-text">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          127 businesses recovering leads live right now
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>&lt;30s</strong>
-          <span>average AI response</span>
+        <h1>Miss a Call.<br /><span class="highlight">AI Texts Back<br />in 30 Seconds.</span></h1>
+        <p class="hero-sub">
+          Your AI instantly contacts every missed caller — qualifying leads and booking jobs while you're still on the other job.
+        </p>
+        <div class="hero-actions">
+          <a href="#signup" class="btn btn-primary btn-lg btn-shimmer">Get Started Free</a>
+          <a href="#how" class="btn btn-ghost btn-lg">See How It Works &#8594;</a>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>$8,000+</strong>
-          <span>avg value per saved job</span>
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>30–50%</strong>
+            <span>of calls go unanswered</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>&lt;30s</strong>
+            <span>AI response time</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>$8k+</strong>
+            <span>avg job value saved</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Live dashboard preview -->
+      <div class="hero-preview">
+        <div class="hero-preview-glow"></div>
+        <div class="browser-frame">
+          <div class="browser-bar">
+            <span class="browser-dot bd-red"></span>
+            <span class="browser-dot bd-yellow"></span>
+            <span class="browser-dot bd-green"></span>
+            <div class="browser-url">app.callrecoverai.com</div>
+          </div>
+          <div class="app-window">
+            <!-- Sidebar -->
+            <div class="app-sidebar">
+              <div class="app-logo">CallRecover<b>AI</b></div>
+              <nav class="app-nav">
+                <div class="app-nav-item active">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+                  Overview
+                </div>
+                <div class="app-nav-item">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.82 12 19.79 19.79 0 0 1 1.75 3.55 2 2 0 0 1 3.73 1.37h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Calls
+                </div>
+                <div class="app-nav-item">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  Voicemails
+                </div>
+                <div class="app-nav-item">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                  Weekly Report
+                </div>
+                <div class="app-nav-item">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+                  Setup
+                </div>
+              </nav>
+              <div class="app-sidebar-footer">
+                <div class="app-company-name">abc roofing</div>
+                <button class="app-signout-btn">Sign out</button>
+              </div>
+            </div>
+            <!-- Main -->
+            <div class="app-main">
+              <div class="app-topbar">
+                <span class="app-page-title">Dashboard</span>
+                <div class="app-topbar-right">
+                  <span class="app-live-indicator"><span class="app-live-dot"></span>LIVE</span>
+                  <span class="app-user">parker</span>
+                </div>
+              </div>
+              <div class="app-body">
+                <div class="app-stats-row">
+                  <div class="app-stat-card">
+                    <span class="app-stat-num">4</span>
+                    <span class="app-stat-lbl">Calls Today</span>
+                  </div>
+                  <div class="app-stat-card app-stat-featured">
+                    <span class="app-stat-num">3</span>
+                    <span class="app-stat-lbl">Leads Recovered</span>
+                  </div>
+                  <div class="app-stat-card">
+                    <span class="app-stat-num">1</span>
+                    <span class="app-stat-lbl">Active Conversations</span>
+                  </div>
+                  <div class="app-stat-card">
+                    <span class="app-stat-num">2</span>
+                    <span class="app-stat-lbl">Voicemails Transcribed</span>
+                  </div>
+                </div>
+                <div class="app-panels">
+                  <div class="app-panel">
+                    <div class="app-panel-title">RECENT CONVERSATIONS</div>
+                    <div class="app-conv-item">
+                      <div class="app-av">MR</div>
+                      <div class="app-conv-info">
+                        <div class="app-conv-name">Mike R. <span class="app-tag app-tag-green">Recovered &#10003;</span></div>
+                        <div class="app-conv-meta">Roof inspection — Wed 9am</div>
+                      </div>
+                      <div class="app-conv-time">2m ago</div>
+                    </div>
+                    <div class="app-conv-item app-conv-active">
+                      <div class="app-av">SL</div>
+                      <div class="app-conv-info">
+                        <div class="app-conv-name">Sarah L. <span class="app-tag app-tag-purple">Active</span></div>
+                        <div class="app-conv-meta">HVAC emergency — qualifying</div>
+                      </div>
+                      <div class="app-conv-time">8m ago</div>
+                    </div>
+                    <div class="app-conv-item">
+                      <div class="app-av">TK</div>
+                      <div class="app-conv-info">
+                        <div class="app-conv-name">Tom K. <span class="app-tag app-tag-green">Recovered &#10003;</span></div>
+                        <div class="app-conv-meta">Plumbing quote — Thu 2pm</div>
+                      </div>
+                      <div class="app-conv-time">23m ago</div>
+                    </div>
+                    <div class="app-conv-item">
+                      <div class="app-av">DR</div>
+                      <div class="app-conv-info">
+                        <div class="app-conv-name">Dana R. <span class="app-tag app-tag-green">Recovered &#10003;</span></div>
+                        <div class="app-conv-meta">Botox consult — Fri 11am</div>
+                      </div>
+                      <div class="app-conv-time">41m ago</div>
+                    </div>
+                  </div>
+                  <div class="app-panel">
+                    <div class="app-panel-title">CONVERSATION — SARAH L.</div>
+                    <div class="app-chat-feed">
+                      <div class="app-chat-bubble app-chat-ai">Hey — sorry we missed you. How can we help?</div>
+                      <div class="app-chat-bubble app-chat-user">AC is out. It's 108 degrees.</div>
+                      <div class="app-chat-bubble app-chat-ai">Oh no — we can get someone out today. What's your address?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,58 +274,68 @@
           </div>
           <div class="dash-stats-row">
             <div class="dash-stat-card">
-              <div class="dash-stat-num" data-count="14">0</div>
-              <div class="dash-stat-label">Leads Today</div>
+              <div class="dash-stat-num" data-count="4">0</div>
+              <div class="dash-stat-label">Calls Today</div>
             </div>
             <div class="dash-stat-card highlight">
-              <div class="dash-stat-num">$42k</div>
-              <div class="dash-stat-label">Est. Value</div>
+              <div class="dash-stat-num" data-count="3">0</div>
+              <div class="dash-stat-label">Leads Recovered</div>
             </div>
             <div class="dash-stat-card">
-              <div class="dash-stat-num" data-count="11">0</div>
-              <div class="dash-stat-label">Jobs Booked</div>
+              <div class="dash-stat-num" data-count="1">0</div>
+              <div class="dash-stat-label">Active Convos</div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="dash-stat-num" data-count="2">0</div>
+              <div class="dash-stat-label">Voicemails</div>
             </div>
           </div>
-          <div class="dash-section-label">Recent Leads</div>
-          <div class="dash-lead-feed">
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">MR</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Mike R. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Roof inspection — Wed 9am</div>
+          <div class="dash-two-col">
+            <div>
+              <div class="dash-section-label">Recent Conversations</div>
+              <div class="dash-lead-feed">
+                <div class="dash-lead">
+                  <div class="dash-lead-avatar">MR</div>
+                  <div class="dash-lead-info">
+                    <div class="dash-lead-name">Mike R. <span class="dash-tag booked">Recovered &#10003;</span></div>
+                    <div class="dash-lead-meta">Roof inspection — Wed 9am</div>
+                  </div>
+                  <div class="dash-lead-time">2m ago</div>
+                </div>
+                <div class="dash-lead">
+                  <div class="dash-lead-avatar">SL</div>
+                  <div class="dash-lead-info">
+                    <div class="dash-lead-name">Sarah L. <span class="dash-tag pending">Active</span></div>
+                    <div class="dash-lead-meta">HVAC emergency — qualifying</div>
+                  </div>
+                  <div class="dash-lead-time">8m ago</div>
+                </div>
+                <div class="dash-lead">
+                  <div class="dash-lead-avatar">TK</div>
+                  <div class="dash-lead-info">
+                    <div class="dash-lead-name">Tom K. <span class="dash-tag booked">Recovered &#10003;</span></div>
+                    <div class="dash-lead-meta">Plumbing quote — Thu 2pm</div>
+                  </div>
+                  <div class="dash-lead-time">23m ago</div>
+                </div>
+                <div class="dash-lead">
+                  <div class="dash-lead-avatar">DR</div>
+                  <div class="dash-lead-info">
+                    <div class="dash-lead-name">Dana R. <span class="dash-tag booked">Recovered &#10003;</span></div>
+                    <div class="dash-lead-meta">Botox consult — Fri 11am</div>
+                  </div>
+                  <div class="dash-lead-time">41m ago</div>
+                </div>
               </div>
-              <div class="dash-lead-time">2m ago</div>
             </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">SL</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Sarah L. <span class="dash-tag pending">Replied</span></div>
-                <div class="dash-lead-meta">HVAC emergency — qualifying</div>
+            <div>
+              <div class="dash-section-label">Conversation — Sarah L.</div>
+              <div class="dash-mini-chat">
+                <div class="dash-msg ai-msg">Hey — sorry we missed you. How can we help?</div>
+                <div class="dash-msg user-msg">AC is out. It's 108 degrees.</div>
+                <div class="dash-msg ai-msg">Oh no — we can get someone out today. What's your address? &#10003;</div>
               </div>
-              <div class="dash-lead-time">8m ago</div>
             </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">TK</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Tom K. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Plumbing quote — Thu 2pm</div>
-              </div>
-              <div class="dash-lead-time">23m ago</div>
-            </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">DR</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Dana R. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Botox consult — Fri 11am</div>
-              </div>
-              <div class="dash-lead-time">41m ago</div>
-            </div>
-          </div>
-          <div class="dash-section-label">Live Conversation</div>
-          <div class="dash-mini-chat">
-            <div class="dash-msg ai-msg">Hi — sorry we missed you. This is ABC Roofing. Still need help?</div>
-            <div class="dash-msg user-msg">Yes, roof is leaking — need someone ASAP</div>
-            <div class="dash-msg ai-msg">On it. What's your zip? I'll get someone out today. &#10003;</div>
           </div>
         </div>
 
