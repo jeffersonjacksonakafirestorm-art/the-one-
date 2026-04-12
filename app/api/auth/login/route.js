@@ -1,9 +1,5 @@
 import { getBusinessByEmail } from '@/lib/db';
-import crypto from 'crypto';
-
-function hashPassword(password) {
-  return crypto.createHash('sha256').update(password + process.env.AUTH_SECRET || 'crai-secret').digest('hex');
-}
+import bcrypt from 'bcryptjs';
 
 function makeToken(id) {
   return Buffer.from(`${id}:${Date.now()}`).toString('base64');
@@ -22,13 +18,12 @@ export async function POST(request) {
       return Response.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
-    const hash = hashPassword(password);
-    if (hash !== business.password_hash) {
+    const valid = await bcrypt.compare(password, business.password_hash);
+    if (!valid) {
       return Response.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
     const token = makeToken(business.id);
-
     const user = {
       id: business.id,
       business_name: business.business_name,
