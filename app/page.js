@@ -56,7 +56,6 @@ export default function Home() {
         }
         .btn-ghost:hover { border-color: #aaa; color: #111; }
 
-        /* HERO */
         .hero {
           min-height: 100vh;
           display: flex; flex-direction: column;
@@ -101,7 +100,6 @@ export default function Home() {
         .hero-ctas .btn-ghost { padding: 14px 28px; font-size: 15px; border-radius: 8px; }
         .hero-fine { font-size: 12px; color: #bbb; }
 
-        /* CONVO MOCKUP */
         .convo-section {
           width: 100%; max-width: 420px;
           margin-top: 80px;
@@ -126,19 +124,11 @@ export default function Home() {
           padding: 10px 14px; border-radius: 16px;
           font-size: 14px; line-height: 1.5; max-width: 82%;
         }
-        .bubble.ai {
-          background: #f0f0f0; color: #222;
-          border-bottom-left-radius: 4px;
-        }
-        .bubble.user {
-          background: #6c47ff; color: #fff;
-          border-bottom-right-radius: 4px;
-        }
+        .bubble.ai { background: #f0f0f0; color: #222; border-bottom-left-radius: 4px; }
+        .bubble.user { background: #6c47ff; color: #fff; border-bottom-right-radius: 4px; }
 
-        /* DIVIDER */
         .rule { width: 100%; height: 1px; background: #e8e8e8; }
 
-        /* GENERIC SECTION */
         .section {
           max-width: 1160px; margin: 0 auto;
           padding: 120px 52px;
@@ -160,50 +150,25 @@ export default function Home() {
           margin-bottom: 64px;
         }
 
-        /* THREE CARDS */
         .cards {
           display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
           border: 1px solid #e8e8e8; border-radius: 16px; overflow: hidden;
         }
-        .card {
-          background: #fff; padding: 40px 36px;
-          border-right: 1px solid #e8e8e8;
-        }
+        .card { background: #fff; padding: 40px 36px; border-right: 1px solid #e8e8e8; }
         .card:last-child { border-right: none; }
-        .card-num {
-          font-size: 11px; font-weight: 600; color: #bbb;
-          letter-spacing: 0.1em; margin-bottom: 36px;
-        }
-        .card-h {
-          font-size: 19px; font-weight: 700;
-          letter-spacing: -0.02em; color: #111;
-          line-height: 1.25; margin-bottom: 12px;
-        }
+        .card-num { font-size: 11px; font-weight: 600; color: #bbb; letter-spacing: 0.1em; margin-bottom: 36px; }
+        .card-h { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: #111; line-height: 1.25; margin-bottom: 12px; }
         .card-p { font-size: 14px; color: #777; line-height: 1.7; }
 
-        /* STEPS */
         .steps { border-top: 1px solid #e8e8e8; }
-        .step {
-          display: grid; grid-template-columns: 72px 1fr;
-          padding: 40px 0; border-bottom: 1px solid #e8e8e8;
-          gap: 0;
-        }
+        .step { display: grid; grid-template-columns: 72px 1fr; padding: 40px 0; border-bottom: 1px solid #e8e8e8; }
         .step-n { font-size: 12px; font-weight: 600; color: #bbb; padding-top: 3px; letter-spacing: 0.05em; }
         .step-h { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: #111; margin-bottom: 10px; }
         .step-p { font-size: 15px; color: #777; line-height: 1.65; max-width: 560px; }
 
-        /* PRICING */
-        .pricing-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-        }
-        .price-card {
-          background: #fff; border: 1px solid #e8e8e8;
-          border-radius: 20px; padding: 52px;
-        }
-        .price-num {
-          font-size: 80px; font-weight: 800;
-          letter-spacing: -0.05em; color: #0a0a0a; line-height: 1;
-        }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        .price-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 20px; padding: 52px; }
+        .price-num { font-size: 80px; font-weight: 800; letter-spacing: -0.05em; color: #0a0a0a; line-height: 1; }
         .price-unit { font-size: 15px; color: #aaa; margin-top: 6px; margin-bottom: 44px; }
         .features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
         .features li { font-size: 15px; color: #444; display: flex; align-items: center; gap: 12px; }
@@ -218,17 +183,12 @@ export default function Home() {
         .price-cta:hover { background: #000; }
         .price-note { font-size: 12px; color: #bbb; text-align: center; margin-top: 14px; }
 
-        /* FAQ */
         .faq-list { border-top: 1px solid #e8e8e8; }
         .faq-row { padding: 28px 0; border-bottom: 1px solid #e8e8e8; }
         .faq-q { font-size: 17px; font-weight: 600; color: #111; margin-bottom: 10px; letter-spacing: -0.01em; }
         .faq-a { font-size: 15px; color: #777; line-height: 1.7; max-width: 640px; }
 
-        /* BOTTOM CTA */
-        .cta-band {
-          background: #0a0a0a; padding: 140px 52px;
-          text-align: center;
-        }
+        .cta-band { background: #0a0a0a; padding: 140px 52px; text-align: center; }
         .cta-band-h {
           font-size: clamp(42px, 7vw, 80px);
           font-weight: 800; color: #fff;
@@ -246,10 +206,8 @@ export default function Home() {
         }
         .cta-band .btn-light:hover { background: #eee; }
 
-        /* FOOTER */
         .footer {
-          border-top: 1px solid #e8e8e8;
-          padding: 36px 52px;
+          border-top: 1px solid #e8e8e8; padding: 36px 52px;
           display: flex; align-items: center; justify-content: space-between;
         }
         .footer-logo { font-size: 15px; font-weight: 700; color: #111; text-decoration: none; }
@@ -273,7 +231,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* NAV */}
       <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
         <a href="/" className="nav-logo">CallRecover<span>AI</span></a>
         <div className="nav-right">
@@ -282,16 +239,15 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO */}
       <section className="hero">
         <div className="hero-pill">
           <span className="hero-pill-dot" />
-          AI-powered missed call recovery
+          30 seconds. Every missed call. Every time.
         </div>
         <h1 className="hero-h1">Every missed call<br />is a job you didn't get.</h1>
         <p className="hero-sub">
-          CallRecoverAI texts back every missed caller in under 30 seconds —
-          qualifying leads and keeping jobs from walking out the door.
+          Someone just called your business. You didn't answer.
+          We texted them back in 30 seconds. They're still talking to you right now.
         </p>
         <div className="hero-ctas">
           <a href="/signup" className="btn btn-dark">Start Free Trial</a>
@@ -300,9 +256,9 @@ export default function Home() {
         <p className="hero-fine">$225/mo &middot; No contracts &middot; Cancel anytime</p>
 
         <div className="convo-section">
-          <p className="convo-label">What your customer sees — instantly</p>
+          <p className="convo-label">Happening right now while you're on the job</p>
           <div className="convo-card">
-            <p className="convo-time">Delivered · Just now</p>
+            <p className="convo-time">Delivered &middot; 28 seconds ago</p>
             <div className="msg">
               <div className="bubble ai">Hey, sorry we missed your call — this is Pacific Roofing. How can we help you today?</div>
             </div>
@@ -310,7 +266,7 @@ export default function Home() {
               <div className="bubble user">Hi, I need a quote for a roof replacement</div>
             </div>
             <div className="msg">
-              <div className="bubble ai">We'd love to help with that. What's your address and when are you looking to get started?</div>
+              <div className="bubble ai">We'd love to help. What's your address and when are you looking to get started?</div>
             </div>
           </div>
         </div>
@@ -318,7 +274,6 @@ export default function Home() {
 
       <div className="rule" />
 
-      {/* WHAT YOU GET */}
       <div className="section" style={{paddingBottom: 0}}>
         <p className="eyebrow">What you get</p>
       </div>
@@ -327,33 +282,32 @@ export default function Home() {
           <div className="card">
             <p className="card-num">01</p>
             <h3 className="card-h">Missed call text-back</h3>
-            <p className="card-p">The moment you miss a call, your customer gets a text. AI handles the conversation — qualifying the lead and capturing their info before they call your competitor.</p>
+            <p className="card-p">You miss the call. 30 seconds later they get a text. AI handles the whole conversation. By the time you check your phone, the lead is qualified and waiting.</p>
           </div>
           <div className="card">
             <p className="card-num">02</p>
             <h3 className="card-h">Voicemail transcription</h3>
-            <p className="card-p">Every voicemail is instantly transcribed and sent to you as text. No more listening through 2-minute recordings. Read them in two seconds.</p>
+            <p className="card-p">No more listening to 2-minute voicemails. Every message gets transcribed and sent to you as text. Read it in two seconds. Move on.</p>
           </div>
           <div className="card">
             <p className="card-num">03</p>
             <h3 className="card-h">Weekly revenue report</h3>
-            <p className="card-p">Every week you see exactly how many leads were recovered and how much revenue was saved. The number that makes canceling impossible.</p>
+            <p className="card-p">Every week you see what you would have lost and what we recovered. That number makes it impossible to cancel.</p>
           </div>
         </div>
       </div>
 
       <div className="rule" />
 
-      {/* HOW IT WORKS */}
       <section className="section" id="how-it-works">
         <p className="eyebrow">Setup</p>
-        <h2 className="section-h">Live in under<br />ten minutes.</h2>
-        <p className="section-p">No tech skills, no hardware, no changing your number.</p>
+        <h2 className="section-h">Ten minutes.<br />Then forget about it.</h2>
+        <p className="section-p">Dial one code. Done. Your number doesn't change. Nothing in your business changes. Except the missed calls start getting answered.</p>
         <div className="steps">
           {[
-            ['01', 'Sign up and get your number', 'Create your account in under two minutes. You receive a dedicated CallRecoverAI phone number assigned specifically to your business.'],
-            ['02', 'Set up call forwarding', 'Dial one code on your existing phone. Any call you miss forwards to your CallRecoverAI number automatically. Your main number never changes.'],
-            ['03', 'AI handles everything else', 'Miss a call → customer gets a text in 30 seconds → AI qualifies the lead → you get a notification. Log in to review every conversation in your dashboard.'],
+            ['01', 'You sign up. We give you a number.', 'Two minutes. You get a dedicated CallRecoverAI number assigned to your business. That\'s your AI line.'],
+            ['02', 'One code on your phone.', 'Forward missed calls to your CallRecoverAI number. 30 seconds. Your main number stays exactly the same.'],
+            ['03', 'AI takes it from here.', 'Miss a call → customer gets a text in 30 seconds → AI qualifies them → you get a notification. Log in whenever to review every conversation.'],
           ].map(([n, h, p]) => (
             <div className="step" key={n}>
               <span className="step-n">{n}</span>
@@ -368,13 +322,12 @@ export default function Home() {
 
       <div className="rule" />
 
-      {/* PRICING */}
       <section className="section" id="pricing">
         <div className="pricing-grid">
           <div>
             <p className="eyebrow">Pricing</p>
             <h2 className="section-h">One price.<br />No surprises.</h2>
-            <p className="section-p">One missed job covers months of service. Most clients see ROI in the first week.</p>
+            <p className="section-p">One missed job pays for six months. Most owners see it pay for itself in the first week.</p>
           </div>
           <div className="price-card">
             <div className="price-num">$225</div>
@@ -399,17 +352,16 @@ export default function Home() {
 
       <div className="rule" />
 
-      {/* FAQ */}
       <section className="section" id="faq">
         <p className="eyebrow">FAQ</p>
-        <h2 className="section-h" style={{marginBottom: 56}}>Questions.</h2>
+        <h2 className="section-h" style={{marginBottom: 56}}>Before you ask.</h2>
         <div className="faq-list">
           {[
-            ['Does my phone number change?', 'No. Your main number stays exactly the same. You set up call forwarding so missed calls route to your CallRecoverAI number. Takes 30 seconds.'],
-            ['What does the AI say to my customers?', 'During signup you set your business name, industry, and the tone you want. The AI introduces itself as your business and handles the conversation naturally. You review every message in your dashboard.'],
-            ['What happens when a customer replies?', 'The AI continues the conversation — collecting their name, what they need, best time to call back, and any other details you want. You get a notification and see everything in your dashboard.'],
-            ['Is there a contract?', 'No contracts. Month to month. Cancel any time from your dashboard in one click.'],
-            ['What if I want to cancel?', 'Cancel from your dashboard instantly. Your number stays active until the end of your billing period.'],
+            ['Does my phone number change?', 'No. Your main number stays exactly the same. You just forward missed calls to your CallRecoverAI number. Takes 30 seconds to set up.'],
+            ['What does the AI say to my customers?', 'Whatever you want it to. During signup you set your business name, industry, and tone. It introduces itself as your business. You review every conversation in your dashboard.'],
+            ['What if a customer replies?', 'AI keeps the conversation going — gets their name, what they need, best time to reach them. You get a notification. Everything\'s in your dashboard when you\'re ready.'],
+            ['Is there a contract?', 'No. Month to month. Cancel in one click from your dashboard whenever you want.'],
+            ['What happens when I cancel?', 'Your number stays active until the end of the billing period. After that it stops. No charges, no hassle.'],
           ].map(([q, a]) => (
             <div className="faq-row" key={q}>
               <p className="faq-q">{q}</p>
@@ -419,14 +371,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BOTTOM CTA */}
       <div className="cta-band">
         <h2 className="cta-band-h">Stop leaving<br />money on the table.</h2>
-        <p className="cta-band-p">Try it free. See a recovered lead before you pay anything.</p>
+        <p className="cta-band-p">Try it free. If you don\'t recover a lead in your first week, you shouldn\'t be paying for it.</p>
         <a href="/signup" className="btn-light">Start Free Trial</a>
       </div>
 
-      {/* FOOTER */}
       <footer className="footer">
         <a href="/" className="footer-logo">CallRecover<span>AI</span></a>
         <div className="footer-links">
