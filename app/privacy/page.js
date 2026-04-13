@@ -1,8 +1,8 @@
 export default function PrivacyPolicy() {
   const styles = {
     page: {
-      backgroundColor: '#07080b',
-      color: '#efefef',
+      backgroundColor: '#000',
+      color: '#fff',
       minHeight: '100vh',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       padding: '0',
@@ -14,14 +14,14 @@ export default function PrivacyPolicy() {
       padding: '60px 32px 100px',
     },
     header: {
-      borderBottom: '1px solid #1e2030',
+      borderBottom: '1px solid #1a1a1a',
       paddingBottom: '32px',
       marginBottom: '48px',
     },
     logo: {
       fontSize: '22px',
       fontWeight: '700',
-      color: '#6c47ff',
+      color: '#fff',
       letterSpacing: '-0.5px',
       marginBottom: '24px',
       display: 'block',
@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
     h1: {
       fontSize: '40px',
       fontWeight: '700',
-      color: '#efefef',
+      color: '#fff',
       margin: '0 0 12px',
       letterSpacing: '-0.5px',
       lineHeight: '1.15',
@@ -42,15 +42,15 @@ export default function PrivacyPolicy() {
     h2: {
       fontSize: '22px',
       fontWeight: '600',
-      color: '#efefef',
+      color: '#fff',
       margin: '48px 0 16px',
-      borderLeft: '3px solid #6c47ff',
+      borderLeft: '3px solid #444',
       paddingLeft: '14px',
     },
     p: {
       fontSize: '16px',
       lineHeight: '1.75',
-      color: '#c8c8d0',
+      color: '#888',
       margin: '0 0 16px',
     },
     ul: {
@@ -60,16 +60,16 @@ export default function PrivacyPolicy() {
     li: {
       fontSize: '16px',
       lineHeight: '1.75',
-      color: '#c8c8d0',
+      color: '#888',
       marginBottom: '6px',
     },
     accent: {
-      color: '#6c47ff',
+      color: '#fff',
       fontWeight: '600',
     },
     highlight: {
-      backgroundColor: '#0f1120',
-      border: '1px solid #1e2030',
+      backgroundColor: '#0a0a0a',
+      border: '1px solid #1a1a1a',
       borderRadius: '8px',
       padding: '20px 24px',
       margin: '24px 0',
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
     },
     contact: {
       backgroundColor: '#0d0e1a',
-      border: '1px solid #6c47ff40',
+      border: '1px solid #333',
       borderRadius: '10px',
       padding: '28px 32px',
       marginTop: '56px',
@@ -90,16 +90,16 @@ export default function PrivacyPolicy() {
     contactHeading: {
       fontSize: '18px',
       fontWeight: '600',
-      color: '#efefef',
+      color: '#fff',
       margin: '0 0 10px',
     },
     link: {
-      color: '#6c47ff',
+      color: '#fff',
       textDecoration: 'none',
     },
     divider: {
       border: 'none',
-      borderTop: '1px solid #1e2030',
+      borderTop: '1px solid #1a1a1a',
       margin: '48px 0',
     },
   };
@@ -115,9 +115,9 @@ export default function PrivacyPolicy() {
 
         <p style={styles.p}>
           CallRecoverAI (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is operated by{' '}
-          <strong style={{ color: '#efefef' }}>[COMPANY NAME], LLC</strong>, a limited liability
+          <strong style={{ color: '#fff' }}>[COMPANY NAME], LLC</strong>, a limited liability
           company organized under the laws of the State of{' '}
-          <strong style={{ color: '#efefef' }}>[STATE]</strong>. This Privacy Policy explains how we
+          <strong style={{ color: '#fff' }}>[STATE]</strong>. This Privacy Policy explains how we
           collect, use, disclose, and protect information when you use our AI-powered missed-call
           text-back service (&quot;Service&quot;).
         </p>
@@ -133,7 +133,7 @@ export default function PrivacyPolicy() {
           or end caller):
         </p>
 
-        <p style={{ ...styles.p, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+        <p style={{ ...styles.p, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
           A. Business Account Information
         </p>
         <ul style={styles.ul}>
@@ -143,7 +143,7 @@ export default function PrivacyPolicy() {
           <li style={styles.li}>Account credentials and authentication tokens</li>
         </ul>
 
-        <p style={{ ...styles.p, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+        <p style={{ ...styles.p, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
           B. Caller Information (End Users)
         </p>
         <ul style={styles.ul}>
@@ -157,7 +157,7 @@ export default function PrivacyPolicy() {
           <li style={styles.li}>Opt-out requests (STOP commands) and opt-out timestamps</li>
         </ul>
 
-        <p style={{ ...styles.p, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+        <p style={{ ...styles.p, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
           C. Payment Information
         </p>
         <ul style={styles.ul}>
@@ -170,7 +170,7 @@ export default function PrivacyPolicy() {
           </li>
         </ul>
 
-        <p style={{ ...styles.p, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+        <p style={{ ...styles.p, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
           D. Usage and Technical Data
         </p>
         <ul style={styles.ul}>
@@ -183,32 +183,32 @@ export default function PrivacyPolicy() {
 
         <ul style={styles.ul}>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>AI Text-Back Service:</strong> When a caller
+            <strong style={{ color: '#fff' }}>AI Text-Back Service:</strong> When a caller
             misses a connection with your business, we use their phone number and call metadata to
             send an automated SMS follow-up via our AI assistant, qualifying leads and answering
             basic questions on your behalf.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Lead Qualification:</strong> Conversation data is
+            <strong style={{ color: '#fff' }}>Lead Qualification:</strong> Conversation data is
             processed by our AI to identify caller intent, schedule callbacks, and collect contact
             details for your business.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Weekly Reports:</strong> We aggregate call and
+            <strong style={{ color: '#fff' }}>Weekly Reports:</strong> We aggregate call and
             conversation data to generate performance summaries delivered to your registered email.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Billing and Account Management:</strong> Payment
+            <strong style={{ color: '#fff' }}>Billing and Account Management:</strong> Payment
             information is used to process your subscription through Stripe and communicate billing
             updates.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Service Improvement:</strong> Anonymized,
+            <strong style={{ color: '#fff' }}>Service Improvement:</strong> Anonymized,
             aggregated usage data may be used to improve the accuracy and quality of our AI
             responses.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Legal Compliance:</strong> We retain certain
+            <strong style={{ color: '#fff' }}>Legal Compliance:</strong> We retain certain
             records to comply with applicable laws, including TCPA opt-out records.
           </li>
         </ul>
@@ -221,7 +221,7 @@ export default function PrivacyPolicy() {
         </p>
 
         <div style={styles.highlight}>
-          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
             Twilio — SMS Delivery Processor
           </p>
           <p style={styles.highlightText}>
@@ -235,7 +235,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <div style={styles.highlight}>
-          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
             Stripe — Payment Processor
           </p>
           <p style={styles.highlightText}>
@@ -249,7 +249,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <div style={styles.highlight}>
-          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#efefef', marginBottom: '8px' }}>
+          <p style={{ ...styles.highlightText, fontWeight: '600', color: '#fff', marginBottom: '8px' }}>
             Anthropic — AI Processing
           </p>
           <p style={styles.highlightText}>
@@ -267,14 +267,14 @@ export default function PrivacyPolicy() {
         <div style={{ ...styles.highlight, borderColor: '#6c47ff80' }}>
           <p style={styles.highlightText}>
             CallRecoverAI is designed to comply with the Telephone Consumer Protection Act (TCPA).
-            Our platform operates on the principle of <strong style={{ color: '#efefef' }}>implied
+            Our platform operates on the principle of <strong style={{ color: '#fff' }}>implied
             consent</strong>: we only send automated text messages to individuals who have
             initiated contact by calling a subscriber&apos;s business line. This missed-call
             context constitutes a reasonable business expectation of follow-up communication.
           </p>
           <br />
           <p style={styles.highlightText}>
-            Every first outbound message includes a clear <strong style={{ color: '#efefef' }}>STOP
+            Every first outbound message includes a clear <strong style={{ color: '#fff' }}>STOP
             opt-out instruction</strong> (e.g., &quot;Reply STOP to unsubscribe&quot;). Upon
             receipt of a STOP reply, we immediately cease all further automated messages to that
             number and log the opt-out for compliance records.
@@ -285,26 +285,26 @@ export default function PrivacyPolicy() {
 
         <ul style={styles.ul}>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Conversation logs and SMS records:</strong> Retained
-            for <strong style={{ color: '#6c47ff' }}>90 days</strong> from the date of the
+            <strong style={{ color: '#fff' }}>Conversation logs and SMS records:</strong> Retained
+            for <strong style={{ color: '#fff' }}>90 days</strong> from the date of the
             conversation, after which they are permanently deleted.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Opt-out records (STOP requests):</strong> Retained
+            <strong style={{ color: '#fff' }}>Opt-out records (STOP requests):</strong> Retained
             indefinitely to ensure compliance with TCPA opt-out requirements.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Payment and billing records:</strong> Retained for
+            <strong style={{ color: '#fff' }}>Payment and billing records:</strong> Retained for
             the period required by applicable law (typically 7 years) and as required by our
             payment processor agreements.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Business account data:</strong> Retained while
+            <strong style={{ color: '#fff' }}>Business account data:</strong> Retained while
             your account is active and for up to 30 days after account cancellation, unless earlier
             deletion is requested.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Voicemail recordings:</strong> Retained for 90
+            <strong style={{ color: '#fff' }}>Voicemail recordings:</strong> Retained for 90
             days unless the business subscriber deletes them earlier from the dashboard.
           </li>
         </ul>
@@ -315,23 +315,23 @@ export default function PrivacyPolicy() {
 
         <ul style={styles.ul}>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Access:</strong> Request a copy of the personal
+            <strong style={{ color: '#fff' }}>Access:</strong> Request a copy of the personal
             data we hold about you or your callers.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Correction:</strong> Request correction of
+            <strong style={{ color: '#fff' }}>Correction:</strong> Request correction of
             inaccurate or incomplete data.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Deletion:</strong> Request deletion of your
+            <strong style={{ color: '#fff' }}>Deletion:</strong> Request deletion of your
             personal data, subject to our legal retention obligations.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Portability:</strong> Request a machine-readable
+            <strong style={{ color: '#fff' }}>Portability:</strong> Request a machine-readable
             export of your conversation and account data.
           </li>
           <li style={styles.li}>
-            <strong style={{ color: '#efefef' }}>Opt-Out of AI Processing:</strong> Cancel your
+            <strong style={{ color: '#fff' }}>Opt-Out of AI Processing:</strong> Cancel your
             subscription at any time; upon cancellation, no further AI processing of new caller
             data will occur.
           </li>
@@ -376,7 +376,7 @@ export default function PrivacyPolicy() {
           <p style={{ ...styles.p, margin: '0' }}>
             For privacy-related questions, data requests, or to report a concern:
             <br />
-            <strong style={{ color: '#efefef' }}>[COMPANY NAME], LLC</strong>
+            <strong style={{ color: '#fff' }}>[COMPANY NAME], LLC</strong>
             <br />
             Email:{' '}
             <a href="mailto:[support@callrecoverai.com]" style={styles.link}>
