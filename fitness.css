@@ -943,6 +943,319 @@ img { display: block; max-width: 100%; }
 .footer-legal a:hover { color: var(--text); }
 
 /* ============================================================
+   HERO — ANIMATED GRADIENT BACKGROUND
+   ============================================================ */
+.hero-gradient-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    -45deg,
+    rgba(255,107,43,0.09),
+    rgba(13,13,13,0.01),
+    rgba(160,80,220,0.08),
+    rgba(255,154,60,0.07)
+  );
+  background-size: 400% 400%;
+  animation: heroGradientShift 14s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes heroGradientShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+/* ============================================================
+   HERO — SPLIT LAYOUT (text left, headshot right)
+   ============================================================ */
+.hero-body--split {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 3rem;
+  text-align: left;
+  align-items: center;
+  max-width: 1100px;
+  padding: 4rem 1.5rem 5rem;
+}
+
+/* Override centered text from base .hero-body */
+.hero-body--split .hero-pill        { justify-content: flex-start; }
+.hero-body--split .hero-actions     { justify-content: flex-start; }
+.hero-body--split .hero-stats       { justify-content: flex-start; }
+.hero-body--split .hero-sub         { margin-left: 0; margin-right: 0; }
+.hero-body--split h1                { font-size: clamp(3.2rem, 7vw, 6rem); }
+
+/* Headshot column */
+.hero-photo-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-headshot-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.hero-headshot-placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, var(--surface2) 0%, var(--surface) 100%);
+  border: 2px dashed rgba(255,107,43,0.3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-headshot-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,107,43,0.07), transparent 70%);
+}
+
+.headshot-icon {
+  font-size: 4rem;
+  opacity: 0.35;
+  position: relative;
+}
+
+.headshot-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  position: relative;
+}
+
+/* Real photo class — swap placeholder div for an img with this class */
+.hero-headshot-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
+/* Gradient overlay fades the bottom of the photo into the background */
+.hero-headshot-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(to top, var(--bg), transparent);
+  border-radius: 0 0 20px 20px;
+  pointer-events: none;
+}
+
+/* Floating credential badge on headshot */
+.hero-headshot-badge {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,107,43,0.4);
+  color: var(--orange-lt);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ============================================================
+   SOCIAL PROOF BAR
+   ============================================================ */
+.social-proof-bar {
+  background: linear-gradient(90deg,
+    rgba(255,107,43,0.06) 0%,
+    rgba(160,80,220,0.05) 50%,
+    rgba(255,154,60,0.06) 100%);
+  border-top: 1px solid rgba(255,107,43,0.2);
+  border-bottom: 1px solid rgba(255,107,43,0.2);
+  padding: 0.875rem 1.5rem;
+}
+
+.spb-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.spb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.spb-icon { font-size: 1rem; }
+
+.spb-dot {
+  color: var(--orange);
+  font-size: 1.4rem;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   PLAN CARD — BRIGHT BLUE "Get It Now" BUTTON
+   ============================================================ */
+.btn-plan.btn-plan-blue {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(59,130,246,0.35);
+}
+
+.btn-plan.btn-plan-blue:hover {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  border-color: transparent;
+  box-shadow: 0 8px 28px rgba(59,130,246,0.55);
+  transform: translateY(-3px);
+}
+
+/* Plan card hover lift */
+.plan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   COMING SOON BADGE (applied by JS when Stripe URL is placeholder)
+   ============================================================ */
+.btn-plan.coming-soon {
+  background: rgba(251,191,36,0.08) !important;
+  border-color: rgba(251,191,36,0.35) !important;
+  color: #fbbf24 !important;
+  box-shadow: none !important;
+  cursor: default;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  font-size: 0.88rem;
+}
+
+/* ============================================================
+   FREE RESOURCES SECTION
+   ============================================================ */
+.free-resources-section {
+  padding: 5rem 0;
+  text-align: center;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.resource-form {
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.resource-form-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.resource-form-row input[type="email"] {
+  flex: 1;
+  min-width: 200px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.5rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.resource-form-row input[type="email"]:focus {
+  border-color: var(--orange);
+}
+
+.resource-form-row input[type="email"]::placeholder {
+  color: var(--text-muted);
+}
+
+.resource-form-row .btn-primary {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.resource-note {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.resource-success {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  background: var(--bg);
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.resource-success[hidden] { display: none; }
+
+.resource-success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.resource-success h3    { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+.resource-success p     { font-size: 0.9rem; color: var(--text-muted); }
+
+/* ============================================================
+   FOOTER — SOCIAL ICONS
+   ============================================================ */
+.footer-social {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.footer-social-link:hover {
+  color: var(--orange-lt);
+  border-color: rgba(255,107,43,0.4);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
@@ -964,6 +1277,18 @@ img { display: block; max-width: 100%; }
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  /* Split hero collapses to single column on tablet */
+  .hero-body--split {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 3rem 1.5rem 4rem;
+  }
+  .hero-body--split .hero-pill    { justify-content: center; }
+  .hero-body--split .hero-actions { justify-content: center; }
+  .hero-body--split .hero-stats   { justify-content: center; }
+  .hero-body--split .hero-sub     { margin-left: auto; margin-right: auto; }
+  .hero-photo-col { max-width: 260px; margin: 0 auto; }
 }
 
 @media (max-width: 680px) {
@@ -998,4 +1323,10 @@ img { display: block; max-width: 100%; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
   .footer-legal { justify-content: center; }
+
+  .spb-dot { display: none; }
+  .spb-inner { flex-direction: column; gap: 0.6rem; }
+
+  .resource-form-row { flex-direction: column; }
+  .resource-form-row .btn-primary { width: 100%; justify-content: center; }
 }

@@ -263,32 +263,58 @@
 
   /* ----------------------------------------------------------
      7. STRIPE PAYMENT LINK BUTTONS
-     Validates the href isn't still a placeholder before navigating.
-     Swap these hrefs in fitness.html with your actual Stripe URLs.
+     When a href is still a placeholder, convert the button into
+     a styled "Coming Soon" badge instead of showing an alert.
+     Replace hrefs in fitness.html with your actual Stripe URLs
+     (buy.stripe.com/...) and the buttons will auto-activate.
   ---------------------------------------------------------- */
   (function initStripeButtons() {
     document.querySelectorAll('.btn-plan').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const href = btn.getAttribute('href');
-        if (!href || href.startsWith('YOUR_STRIPE')) {
-          e.preventDefault();
-          alert(
-            'Payment link not yet configured.\n\n' +
-            'To activate:\n' +
-            '1. Go to Stripe Dashboard → Payment Links\n' +
-            '2. Create a link for this product\n' +
-            '3. Replace the href in fitness.html with the Stripe URL\n\n' +
-            'The URL will look like: https://buy.stripe.com/...'
-          );
-        }
-        /* If it's a real Stripe URL the browser navigates normally */
-      });
+      const href = btn.getAttribute('href');
+      if (!href || href.startsWith('YOUR_STRIPE')) {
+        /* Mark as Coming Soon — looks intentional, not broken */
+        btn.textContent = 'Coming Soon';
+        btn.classList.add('coming-soon');
+        btn.removeAttribute('href');
+        btn.setAttribute('role', 'status');
+        btn.setAttribute('aria-label', 'Coming soon — payment link not yet configured');
+      }
+      /* If it's a real Stripe URL the browser navigates normally */
     });
   })();
 
 
   /* ----------------------------------------------------------
-     8. CALENDLY — notify if placeholder URL is still in place
+     8. FREE RESOURCES FORM — show success message on submit
+  ---------------------------------------------------------- */
+  (function initResourceForm() {
+    const form    = document.getElementById('resource-form');
+    const success = document.getElementById('resource-success');
+    if (!form || !success) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      /*
+        TODO: wire up your email service here.
+        Options: Mailchimp, ConvertKit, Beehiiv, Formspree, etc.
+        Example with Formspree:
+          fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: form.email.value })
+          });
+      */
+
+      form.hidden = true;
+      success.hidden = false;
+      success.focus();
+    });
+  })();
+
+
+  /* ----------------------------------------------------------
+     9. CALENDLY — notify if placeholder URL is still in place
   ---------------------------------------------------------- */
   (function checkCalendly() {
     const widget = document.querySelector('.calendly-inline-widget');

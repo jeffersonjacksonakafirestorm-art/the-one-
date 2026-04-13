@@ -249,6 +249,29 @@ body {
   pointer-events: none;
 }
 
+/* Animated gradient background layer */
+.hero-gradient-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    -45deg,
+    rgba(108,71,255,0.09),
+    rgba(10,10,15,0.01),
+    rgba(160,118,255,0.07),
+    rgba(80,40,200,0.08)
+  );
+  background-size: 400% 400%;
+  animation: heroGradientShift 16s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes heroGradientShift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
 .hero-content { max-width: 860px; margin: 0 auto; }
 
 .hero-pill {
@@ -1156,6 +1179,32 @@ h2 {
 }
 .footer-bottom p { font-size: 13px; color: var(--muted); }
 .footer-disclaimer { max-width: 480px; text-align: right; }
+
+/* Footer social icons */
+.footer-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.footer-social-link:hover {
+  color: var(--accent2);
+  border-color: rgba(108,71,255,0.5);
+  transform: translateY(-2px);
+}
 
 @media (max-width: 600px) {
   .footer-disclaimer { text-align: left; }

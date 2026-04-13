@@ -57,41 +57,86 @@
   <section class="hero" id="hero">
     <canvas id="heroCanvas" aria-hidden="true"></canvas>
     <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="hero-body">
-      <div class="hero-pill">
-        <span class="pill-dot"></span>
-        <span>Only 12 coaching spots open this month</span>
-      </div>
-      <h1>
-        Stop Spinning Your Wheels.<br />
-        <span class="gradient-text">Start Getting Results.</span>
-      </h1>
-      <p class="hero-sub">
-        1-on-1 online fitness coaching built around your life — not the other way around.
-        Custom workouts, nutrition plans, and daily accountability so you finally build the body you want.
-      </p>
-      <div class="hero-actions">
-        <a href="#book" class="btn-primary">Book My Free Strategy Call &rarr;</a>
-        <a href="#programs" class="btn-ghost">See Programs</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hstat-num">500+</span>
-          <span class="hstat-lbl">Clients Transformed</span>
+    <div class="hero-gradient-bg" aria-hidden="true"></div>
+    <div class="hero-body hero-body--split">
+
+      <!-- LEFT: text -->
+      <div class="hero-text">
+        <div class="hero-pill">
+          <span class="pill-dot"></span>
+          <span>Only 12 coaching spots open this month</span>
         </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hstat-num">4.9&#9733;</span>
-          <span class="hstat-lbl">Average Rating</span>
+        <h1>
+          Stop Spinning<br />Your Wheels.<br />
+          <span class="gradient-text">Start Getting Results.</span>
+        </h1>
+        <p class="hero-sub">
+          1-on-1 online fitness coaching built around your life — not the other way around.
+          Custom workouts, nutrition plans, and daily accountability so you finally build the body you want.
+        </p>
+        <div class="hero-actions">
+          <a href="#book" class="btn-primary">Book My Free Strategy Call &rarr;</a>
+          <a href="#programs" class="btn-ghost">See Programs</a>
         </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hstat-num">92%</span>
-          <span class="hstat-lbl">Goal Achievement Rate</span>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hstat-num">500+</span>
+            <span class="hstat-lbl">Clients Transformed</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hstat-num">4.9&#9733;</span>
+            <span class="hstat-lbl">Average Rating</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hstat-num">92%</span>
+            <span class="hstat-lbl">Goal Achievement Rate</span>
+          </div>
         </div>
       </div>
+
+      <!-- RIGHT: headshot placeholder -->
+      <div class="hero-photo-col">
+        <div class="hero-headshot-wrap">
+          <!--
+            TO ADD YOUR PHOTO:
+            Replace the div below with:
+            <img src="your-photo.jpg" alt="Coach Parker" class="hero-headshot-img" />
+          -->
+          <div class="hero-headshot-placeholder" aria-label="Coach photo placeholder">
+            <span class="headshot-icon">&#128100;</span>
+            <span class="headshot-label">YOUR<br/>PHOTO</span>
+          </div>
+          <div class="hero-headshot-gradient"></div>
+          <div class="hero-headshot-badge">
+            <span>&#9889;</span> Personal Trainer
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
+
+  <!-- ===== SOCIAL PROOF BAR ===== -->
+  <div class="social-proof-bar">
+    <div class="spb-inner">
+      <div class="spb-item">
+        <span class="spb-icon">&#127942;</span>
+        <span>4 Years Real Experience</span>
+      </div>
+      <span class="spb-dot">&middot;</span>
+      <div class="spb-item">
+        <span class="spb-icon">&#128203;</span>
+        <span>2 Programs</span>
+      </div>
+      <span class="spb-dot">&middot;</span>
+      <div class="spb-item">
+        <span class="spb-icon">&#128170;</span>
+        <span>Trusted by Real Traders &amp; Athletes</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== TRUST BAR ===== -->
   <div class="trust-bar">
@@ -161,9 +206,9 @@
             Stripe Dashboard → Payment Links → Create Link → copy URL
           -->
           <a href="YOUR_STRIPE_PAYMENT_LINK_FOUNDATION"
-             class="btn-plan"
+             class="btn-plan btn-plan-blue"
              rel="noopener">
-            Get Started &mdash; $197/mo
+            Get It Now &rarr;
           </a>
           <p class="plan-note">No contracts &middot; Cancel anytime</p>
         </div>
@@ -189,9 +234,9 @@
             Replace the href below with your Stripe Payment Link for VIP.
           -->
           <a href="YOUR_STRIPE_PAYMENT_LINK_VIP"
-             class="btn-plan btn-plan-primary"
+             class="btn-plan btn-plan-blue"
              rel="noopener">
-            Get Started &mdash; $497/mo
+            Get It Now &rarr;
           </a>
           <p class="plan-note">No contracts &middot; Cancel anytime</p>
         </div>
@@ -217,9 +262,9 @@
             12-Week Transformation (one-time charge).
           -->
           <a href="YOUR_STRIPE_PAYMENT_LINK_TRANSFORMATION"
-             class="btn-plan"
+             class="btn-plan btn-plan-blue"
              rel="noopener">
-            Enroll Now &mdash; $997
+            Get It Now &rarr;
           </a>
           <p class="plan-note">Limited spots &middot; Next cohort starts soon</p>
         </div>
@@ -515,6 +560,38 @@
     </div>
   </section>
 
+  <!-- ===== FREE RESOURCES ===== -->
+  <section class="free-resources-section" id="free-resources" aria-labelledby="fr-heading">
+    <div class="container">
+      <p class="section-tag">FREE RESOURCES</p>
+      <h2 id="fr-heading" class="section-h2">Get My Free Training Guide</h2>
+      <p class="section-sub">
+        Download the free PDF: <em>5 Mistakes Keeping You From the Body You Want</em> — and how to fix them starting this week.
+      </p>
+      <form class="resource-form" id="resource-form" novalidate>
+        <div class="resource-form-row">
+          <input
+            type="email"
+            id="resource-email"
+            name="email"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          />
+          <button type="submit" class="btn-primary">
+            Send Me the Guide &rarr;
+          </button>
+        </div>
+        <p class="resource-note">&#128274; No spam. Unsubscribe anytime.</p>
+      </form>
+      <div class="resource-success" id="resource-success" hidden>
+        <div class="resource-success-icon">&#9989;</div>
+        <h3>Check your email!</h3>
+        <p>Your free guide is on its way. Check your inbox (and spam folder, just in case).</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== FOOTER ===== -->
   <footer class="fit-footer">
     <div class="container">
@@ -547,10 +624,29 @@
           <h4>Connect</h4>
           <p><a href="mailto:coach@apexfit.com">&#128231; coach@apexfit.com</a></p>
           <p><a href="#book">&#128197; Book a discovery call</a></p>
+          <div class="footer-social">
+            <!--
+              Replace href="#" with your actual profile URLs:
+              Instagram: https://instagram.com/YOUR_HANDLE
+              TikTok:    https://tiktok.com/@YOUR_HANDLE
+            -->
+            <a href="#" class="footer-social-link" aria-label="Instagram" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="TikTok" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 ApexFit Coaching. All rights reserved.</p>
+        <p>&copy; 2025 Parker. All rights reserved.</p>
         <div class="footer-legal">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
