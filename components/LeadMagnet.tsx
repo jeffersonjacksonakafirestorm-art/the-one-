@@ -47,9 +47,9 @@ export default function LeadMagnet() {
 
           {status === 'success' ? (
             <div className="rounded-xl bg-blue-950/50 border border-blue-700/40 p-6">
-              <p className="text-white font-semibold mb-1">You are on the list.</p>
+              <p className="text-white font-semibold mb-1">Check your email!</p>
               <p className="text-slate-400 text-sm">
-                Check your inbox shortly. If you do not see it, check your spam folder.
+                Your free guide is on its way. If you don&apos;t see it in a minute, check your spam folder.
               </p>
             </div>
           ) : (

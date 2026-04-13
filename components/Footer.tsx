@@ -137,7 +137,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs text-slate-600">
-            &copy; {new Date().getFullYear()} Parker. All rights reserved.
+            &copy; 2025 Parker. All rights reserved.
           </p>
           <p className="text-xs text-slate-700 max-w-sm text-right">
             Trading content is for educational purposes only and is not financial
