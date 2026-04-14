@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'CallRecoverAI — Every Missed Call, Answered.',
-  description: 'AI texts back every missed caller in under 30 seconds. Keeps jobs from walking out the door.',
+  title: 'Groundwork — The Operating System for Your Trade Business',
+  description: 'Automate quotes, follow-ups, invoices, customer reactivation, and weekly reports. Built for roofing, HVAC, plumbing, electrical, and landscaping businesses.',
 }
 
 export default function RootLayout({ children }) {
