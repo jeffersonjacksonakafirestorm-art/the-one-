@@ -1,5 +1,5 @@
 {
-  "name": "sms-reminder-ai",
+  "name": "groundwork",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,10 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.27.0",
+    "@supabase/supabase-js": "^2.45.0",
     "next": "^14.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "twilio": "^5.3.0"
+    "resend": "^3.2.0"
   }
 }

@@ -18,7 +18,7 @@ const s = {
   swLink: { color: '#fff', fontWeight: 600, textDecoration: 'none' },
 };
 
-const industries = ['Roofing','HVAC','Plumbing','Electrical','Landscaping','Law Firm','Med Spa / Aesthetics','Dental','Real Estate','Water & Fire Restoration','Solar','Other'];
+const industries = ['Roofing', 'HVAC', 'Plumbing', 'Electrical', 'Landscaping', 'Water & Fire Restoration', 'Solar', 'Other'];
 
 export default function Signup() {
   const [form, setForm] = useState({ business_name: '', owner_name: '', email: '', password: '', phone: '', industry: '' });
@@ -31,11 +31,12 @@ export default function Signup() {
     setLoading(true);
     setError('');
     try {
-      // Store user locally — backend activates when credentials are configured
       const user = { ...form, id: Date.now().toString(), plan: 'trial', created_at: new Date().toISOString() };
       localStorage.setItem('crai_user', JSON.stringify(user));
       localStorage.setItem('crai_authed', '1');
-      window.location.href = '/dashboard';
+      // Remove any stale onboarding complete flag so fresh onboarding runs
+      localStorage.removeItem('onboarding_complete');
+      window.location.href = '/onboarding';
     } catch {
       setError('Something went wrong. Please try again.');
       setLoading(false);
@@ -45,9 +46,9 @@ export default function Signup() {
   return (
     <div style={s.page}>
       <div style={s.card}>
-        <a href="/" style={s.logo}>CallRecoverAI</a>
-        <p style={s.sub}>Start recovering missed calls today</p>
-        <span style={s.badge}>✦ Free trial — no credit card required</span>
+        <a href="/" style={s.logo}>Groundwork</a>
+        <p style={s.sub}>Start automating your trade business today</p>
+        <span style={s.badge}>Free trial &mdash; no credit card required</span>
         {error && <div style={s.error}>{error}</div>}
         <form onSubmit={submit}>
           <div style={s.group}>
@@ -69,17 +70,17 @@ export default function Signup() {
           <div style={s.group}>
             <label style={s.label}>Business Phone</label>
             <input style={s.input} type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={e => up('phone', e.target.value)} required />
-            <p style={s.hint}>The number your customers already call.</p>
+            <p style={s.hint}>Your main customer-facing number.</p>
           </div>
           <div style={s.group}>
             <label style={s.label}>Industry</label>
             <select style={s.select} value={form.industry} onChange={e => up('industry', e.target.value)} required>
-              <option value="">Select your industry</option>
+              <option value="">Select your trade</option>
               {industries.map(i => <option key={i} value={i}>{i}</option>)}
             </select>
           </div>
           <button type="submit" style={{ ...s.btn, opacity: loading ? 0.7 : 1 }} disabled={loading}>
-            {loading ? 'Creating account...' : 'Start Free Trial →'}
+            {loading ? 'Creating account...' : 'Start Free Trial \u2192'}
           </button>
         </form>
         <p style={s.sw}>Already have an account? <a href="/login" style={s.swLink}>Sign in</a></p>

@@ -29,7 +29,9 @@ export default function Login() {
       const user = JSON.parse(stored);
       if (user.email === form.email && user.password === form.password) {
         localStorage.setItem('crai_authed', '1');
-        window.location.href = '/dashboard';
+        // Check if onboarding is done
+        const onboardingDone = localStorage.getItem('onboarding_complete');
+        window.location.href = onboardingDone ? '/dashboard' : '/onboarding';
         return;
       }
     }
@@ -40,7 +42,7 @@ export default function Login() {
   return (
     <div style={s.page}>
       <div style={s.card}>
-        <a href="/" style={s.logo}>CallRecoverAI</a>
+        <a href="/" style={s.logo}>Groundwork</a>
         <p style={s.sub}>Sign in to your dashboard</p>
         {error && <div style={s.error}>{error}</div>}
         <form onSubmit={submit}>
@@ -50,10 +52,10 @@ export default function Login() {
           </div>
           <div style={s.group}>
             <label style={s.label}>Password</label>
-            <input style={s.input} type="password" placeholder="••••••••" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required />
+            <input style={s.input} type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required />
           </div>
           <button type="submit" style={{ ...s.btn, opacity: loading ? 0.7 : 1 }} disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In →'}
+            {loading ? 'Signing in...' : 'Sign In \u2192'}
           </button>
         </form>
         <p style={s.sw}>Don&apos;t have an account? <a href="/signup" style={s.swLink}>Start free trial</a></p>
