@@ -1,5 +1,5 @@
 /* ============================================================
-   CallRecoverAI — App Logic
+   JointSync Systems — App Logic
    ============================================================ */
 
 // ---- Mobile Nav ----
@@ -67,63 +67,6 @@ const counterObserver = new IntersectionObserver(
 );
 document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
-// ---- Demo Phone Animation ----
-const demoMessages = document.getElementById('demo-messages');
-
-const conversation = [
-  { type: 'ai',    text: 'Hey — sorry we missed you. This is ABC Roofing. Still need help?',  delay: 800 },
-  { type: 'reply', text: 'Yes! My roof is leaking after the storm. Need someone ASAP.',        delay: 2200 },
-  { type: 'ai',    text: "We're on it. What's your zip code?",                                  delay: 3400 },
-  { type: 'reply', text: '85201',                                                               delay: 4400 },
-  { type: 'ai',    text: 'Perfect — we cover that area. Available today 2-5pm?',               delay: 5600 },
-  { type: 'reply', text: '3pm works great.',                                                    delay: 6700 },
-  { type: 'ai',    text: 'Booked! Mike will be there at 3pm. Confirmation sent.',              delay: 7800 },
-];
-
-let demoRunning = false;
-
-function startDemoAnimation() {
-  if (demoRunning || !demoMessages) return;
-  demoRunning = true;
-
-  conversation.forEach(function(item) {
-    setTimeout(function() {
-      if (!document.contains(demoMessages)) return;
-      const msg = document.createElement('div');
-      msg.className = 'msg ' + (item.type === 'ai' ? 'ai' : 'reply');
-      msg.textContent = item.text;
-      demoMessages.appendChild(msg);
-      demoMessages.scrollTop = demoMessages.scrollHeight;
-    }, item.delay);
-  });
-
-  setTimeout(function() {
-    const msgs = demoMessages.querySelectorAll('.msg.ai, .msg.reply');
-    msgs.forEach(function(el) {
-      el.style.transition = 'opacity 0.5s ease';
-      el.style.opacity = '0';
-    });
-    setTimeout(function() {
-      msgs.forEach(function(el) { el.remove(); });
-      demoRunning = false;
-      startDemoAnimation();
-    }, 600);
-  }, 11000);
-}
-
-const phoneEl = document.querySelector('.phone-wrap');
-if (phoneEl) {
-  const phoneObserver = new IntersectionObserver(
-    function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) startDemoAnimation();
-      });
-    },
-    { threshold: 0.4 }
-  );
-  phoneObserver.observe(phoneEl);
-}
-
 // ---- FAQ Accordion ----
 document.querySelectorAll('.faq-q').forEach(function(btn) {
   btn.addEventListener('click', function() {
@@ -154,3 +97,58 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     window.scrollTo({ top: top, behavior: 'smooth' });
   });
 });
+
+// ---- Hero Canvas — subtle node network ----
+const canvas = document.getElementById('hero-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let nodes = [];
+  const ACCENT = '0,201,167';
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  for (let i = 0; i < 40; i++) {
+    nodes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 1,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${ACCENT},0.35)`;
+      ctx.fill();
+    });
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(${ACCENT},${0.08 * (1 - dist / 120)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}

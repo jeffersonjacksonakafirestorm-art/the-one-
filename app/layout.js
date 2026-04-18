@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'CallRecoverAI — Every Missed Call, Answered.',
-  description: 'AI texts back every missed caller in under 30 seconds. Automatically qualifies leads and keeps jobs from walking out the door.',
-  keywords: 'missed call text back, AI lead recovery, business automation, call recovery',
+  title: 'JointSync Systems — Clinical Continuity Automation for Orthopedic Practices',
+  description: 'JointSync automates referral intake and MRI chasing to recover $150k+ in annual surgical revenue for private orthopedic practices in Texas and Florida.',
+  keywords: 'orthopedic automation, referral management, MRI chasing, surgical practice automation, clinical continuity, HIPAA compliant',
 }
 
 export default function RootLayout({ children }) {
