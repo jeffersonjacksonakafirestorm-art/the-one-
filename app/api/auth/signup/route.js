@@ -1,9 +1,5 @@
 import { createBusiness, getBusinessByEmail } from '@/lib/db';
-import crypto from 'crypto';
-
-function hashPassword(password) {
-  return crypto.createHash('sha256').update(password + process.env.AUTH_SECRET || 'crai-secret').digest('hex');
-}
+import bcrypt from 'bcryptjs';
 
 function makeToken(id) {
   return Buffer.from(`${id}:${Date.now()}`).toString('base64');
@@ -27,22 +23,22 @@ export async function POST(request) {
     }
 
     const defaultMessage = `Hey — sorry we missed your call, this is ${business_name}. How can we help?`;
+    const password_hash = await bcrypt.hash(password, 12);
 
     const business = await createBusiness({
       business_name,
       owner_name,
       email: email.toLowerCase().trim(),
-      password_hash: hashPassword(password),
+      password_hash,
       phone: phone.replace(/\D/g, ''),
       industry,
       welcome_message: welcome_message || defaultMessage,
       plan: 'trial',
       trial_started_at: new Date().toISOString(),
-      twilio_number: null, // assigned when Twilio is configured
+      twilio_number: null,
     });
 
     const token = makeToken(business.id);
-
     const user = {
       id: business.id,
       business_name: business.business_name,
