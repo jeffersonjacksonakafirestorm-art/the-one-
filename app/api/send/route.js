@@ -1,11 +1,10 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const fmt = (n) => '$' + Math.round(n).toLocaleString();
 
 export async function POST(req) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const { name, email, practice, surgeons, referrals, caseValue, totalLost, recoveryLow, recoveryHigh } = await req.json();
 
     if (!name || !email) {
