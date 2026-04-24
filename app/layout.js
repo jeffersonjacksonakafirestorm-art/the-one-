@@ -1,21 +1,11 @@
 export const metadata = {
-  title: 'Actionable AI — Deploy AI Employees',
-  description: 'Deploy intelligent AI agents that manage your Stripe, Calendly, CRM, and more — in plain English. No code. No babysitting.',
+  title: 'No Collar',
+  description: 'AI employees that run in the background. No code. No collar.',
   manifest: '/manifest.json',
   themeColor: '#ffffff',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Actionable AI',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
-  icons: {
-    apple: '/icon-192.png',
-  },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'No Collar' },
+  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
+  icons: { apple: '/icon-192.png' },
 }
 
 export default function RootLayout({ children }) {
@@ -31,7 +21,7 @@ export default function RootLayout({ children }) {
       </head>
       <body style={{
         margin: 0,
-        background: '#fafafa',
+        background: '#fff',
         color: '#0a0a0a',
         fontFamily: "'Inter Tight', system-ui, sans-serif",
         WebkitFontSmoothing: 'antialiased',
