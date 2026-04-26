@@ -23,12 +23,18 @@ function VerifyForm() {
     next[i] = v;
     setDigits(next);
     if (v && i < 5) inputs.current[i + 1]?.focus();
-    if (!v && i > 0) inputs.current[i - 1]?.focus();
   }
 
   function handleKeyDown(i, e) {
-    if (e.key === 'Backspace' && !digits[i] && i > 0) {
-      inputs.current[i - 1]?.focus();
+    if (e.key === 'Backspace') {
+      if (digits[i]) {
+        const next = [...digits];
+        next[i] = '';
+        setDigits(next);
+      } else if (i > 0) {
+        inputs.current[i - 1]?.focus();
+      }
+      e.preventDefault();
     }
   }
 
