@@ -30,3 +30,8 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Playwright
+.playwright-mcp/
+screenshot-*.png
+screenshot-*.jpeg
