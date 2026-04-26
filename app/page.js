@@ -1,52 +1,174 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const BLOBS = [
-  { id: 1,  w: 110, h: 90,  left: 6,  dur: 14, delay: 0  },
-  { id: 2,  w: 70,  h: 80,  left: 15, dur: 19, delay: 4  },
-  { id: 3,  w: 190, h: 160, left: 26, dur: 23, delay: 8  },
-  { id: 4,  w: 55,  h: 65,  left: 38, dur: 16, delay: 1  },
-  { id: 5,  w: 130, h: 115, left: 48, dur: 21, delay: 6  },
-  { id: 6,  w: 95,  h: 105, left: 58, dur: 13, delay: 11 },
-  { id: 7,  w: 210, h: 185, left: 68, dur: 26, delay: 3  },
-  { id: 8,  w: 65,  h: 75,  left: 78, dur: 17, delay: 7  },
-  { id: 9,  w: 85,  h: 95,  left: 88, dur: 20, delay: 13 },
-  { id: 10, w: 45,  h: 50,  left: 43, dur: 15, delay: 9  },
-  { id: 11, w: 100, h: 90,  left: 20, dur: 22, delay: 16 },
-  { id: 12, w: 155, h: 135, left: 72, dur: 25, delay: 5  },
-  { id: 13, w: 75,  h: 85,  left: 33, dur: 18, delay: 12 },
-  { id: 14, w: 120, h: 100, left: 52, dur: 24, delay: 2  },
-];
+// ── WebGL shader background (orange nebula) ──────────────────────────────────
+const SHADER_SOURCE = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define FC gl_FragCoord.xy
+#define T time
+#define R resolution
+#define MN min(R.x,R.y)
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(in vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);float a=rnd(i),b=rnd(i+vec2(1,0)),c=rnd(i+vec2(0,1)),d=rnd(i+1.);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;mat2 m=mat2(1.,-.5,.2,1.2);for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;}return t;}
+float clouds(vec2 p){float d=1.,t=.0;for(float i=.0;i<3.;i++){float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);t=mix(t,d,a);d=a;p*=2./(i+1.);}return t;}
+void main(void){
+  vec2 uv=(FC-.5*R)/MN,st=uv*vec2(2,1);
+  vec3 col=vec3(0);
+  float bg=clouds(vec2(st.x+T*.5,-st.y));
+  uv*=1.-.3*(sin(T*.2)*.5+.5);
+  for(float i=1.;i<12.;i++){
+    uv+=.1*cos(i*vec2(.1+.01*i,.8)+i*i+T*.5+.1*uv.x);
+    vec2 p=uv;
+    float d=length(p);
+    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
+    float b=noise(i+p+bg*1.731);
+    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
+    col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);
+  }
+  O=vec4(col,1);
+}`;
 
-const FEATURES = [
-  { icon: '⚡', title: 'Personalized to your situation', desc: 'Tell Actionable your income, debt, goals, and constraints. Get a plan built only for you — not generic advice.' },
-  { icon: '📸', title: 'Photo & document analysis', desc: 'Upload your pay stub, bank statement, or business idea. Actionable reads it and coaches based on the real numbers.' },
-  { icon: '🎙', title: 'Voice input', desc: 'Talk through your situation. Actionable listens, responds, and guides you — no typing required.' },
-  { icon: '📈', title: 'Progress tracking', desc: 'Milestone checklists and streak tracking keep you accountable and show you exactly how far you\'ve come.' },
-  { icon: '💬', title: 'Full chat history', desc: 'Every conversation saved. Pick up where you left off across sessions, weeks, and months.' },
-  { icon: '🤝', title: 'Community stories', desc: 'Read real stories from people who broke out. Post yours when you make it.' },
-];
+function useShaderBg() {
+  const canvasRef = useRef(null);
+  const rafRef    = useRef(null);
 
-function detailHint(len) {
-  if (len === 0)   return { text: '', color: 'transparent' };
-  if (len < 80)    return { text: 'Keep going — add your income, debts, goals', color: '#444' };
-  if (len < 250)   return { text: 'Good start — include what you\'ve tried', color: '#555' };
-  if (len < 500)   return { text: 'Getting detailed — add your timeline', color: '#666' };
-  if (len < 800)   return { text: 'Strong detail — include your biggest obstacle', color: '#888' };
-  return           { text: '✓ Excellent detail — this will get a real plan', color: '#4ade80' };
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const gl = canvas.getContext('webgl2');
+    if (!gl) return;
+
+    const vert = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vert, `#version 300 es\nprecision highp float;\nin vec4 position;\nvoid main(){gl_Position=position;}`);
+    gl.compileShader(vert);
+
+    const frag = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(frag, SHADER_SOURCE);
+    gl.compileShader(frag);
+
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vert);
+    gl.attachShader(prog, frag);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,-1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog, 'position');
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+    const uRes  = gl.getUniformLocation(prog, 'resolution');
+    const uTime = gl.getUniformLocation(prog, 'time');
+
+    const resize = () => {
+      const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+      canvas.width  = window.innerWidth  * dpr;
+      canvas.height = window.innerHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const loop = (now) => {
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, now * 1e-3);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(rafRef.current);
+      gl.deleteProgram(prog);
+    };
+  }, []);
+
+  return canvasRef;
 }
 
+// ── Radial pulse loader ───────────────────────────────────────────────────────
+function PulseLoader() {
+  const ref = useRef(null);
+  const raf = useRef(null);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = 48; canvas.height = 48;
+    let t = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, 48, 48);
+      for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2;
+        const pulse = Math.sin(t * 0.05 + i * 0.5) * 10 + 14;
+        ctx.beginPath();
+        ctx.moveTo(24, 24);
+        ctx.lineTo(24 + Math.cos(angle) * pulse, 24 + Math.sin(angle) * pulse);
+        const op = 0.3 + Math.sin(t * 0.05 + i * 0.5) * 0.7;
+        ctx.strokeStyle = `rgba(251,146,60,${op})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(24 + Math.cos(angle) * pulse, 24 + Math.sin(angle) * pulse, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#fb923c';
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(24, 24, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#fb923c';
+      ctx.fill();
+      t++;
+      raf.current = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => cancelAnimationFrame(raf.current);
+  }, []);
+
+  return <canvas ref={ref} style={{ width: 48, height: 48 }} />;
+}
+
+// ── Detail hint ───────────────────────────────────────────────────────────────
+function detailHint(len) {
+  if (len === 0)   return { text: '',                                          color: 'transparent' };
+  if (len < 80)    return { text: 'Keep going — add income, debts, goals',    color: 'rgba(251,146,60,0.4)' };
+  if (len < 250)   return { text: "Good — include what you've tried",         color: 'rgba(251,146,60,0.55)' };
+  if (len < 500)   return { text: 'Getting detailed — add your timeline',     color: 'rgba(251,146,60,0.7)' };
+  if (len < 800)   return { text: 'Strong — include your biggest obstacle',   color: 'rgba(251,146,60,0.85)' };
+  return             { text: '✓ Excellent detail — ready to send',            color: '#fb923c' };
+}
+
+const FEATURES = [
+  { icon: '⚡', title: 'Personalized to your situation',  desc: 'Income, debt, goals, constraints — your plan, not a template.' },
+  { icon: '📸', title: 'Photo & document analysis',       desc: 'Upload a pay stub or bank statement. Actionable coaches on real numbers.' },
+  { icon: '🎙', title: 'Voice input',                     desc: 'Talk through your situation. No typing required.' },
+  { icon: '📈', title: 'Progress tracking',               desc: 'Milestone checklists and streaks keep you moving forward.' },
+  { icon: '💬', title: 'Full chat history',               desc: 'Every session saved. Pick up where you left off.' },
+  { icon: '🤝', title: 'Community stories',               desc: 'Real people who broke out. Post yours when you make it.' },
+];
+
+// ── Main page ─────────────────────────────────────────────────────────────────
 export default function Landing() {
+  const canvasRef  = useShaderBg();
   const [scenario, setScenario]   = useState('');
   const [loading, setLoading]     = useState(false);
   const [response, setResponse]   = useState('');
   const [trialUsed, setTrialUsed] = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
 
-  async function runFreeTrial() {
+  async function submit() {
     if (!scenario.trim() || loading || trialUsed || scenario.length < 50) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/free-trial', {
+      const res  = await fetch('/api/free-trial', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scenario: scenario.trim() }),
@@ -57,9 +179,7 @@ export default function Landing() {
         setTrialUsed(true);
         if (typeof localStorage !== 'undefined') localStorage.setItem('actionable_trial_used', '1');
       }
-    } catch {
-      setResponse('Something went wrong. Please try again.');
-    }
+    } catch { setResponse('Something went wrong. Please try again.'); }
     setLoading(false);
   }
 
@@ -69,203 +189,166 @@ export default function Landing() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;700;900&display=swap');
-
-        @keyframes blobRise {
-          0%   { transform: translateY(0px) rotate(0deg);   opacity: 0; }
-          8%   { opacity: 1; }
-          92%  { opacity: 0.7; }
-          100% { transform: translateY(-115vh) rotate(180deg); opacity: 0; }
-        }
-        @keyframes blobMorph {
-          0%   { border-radius: 62% 38% 34% 66% / 58% 32% 68% 42%; }
-          20%  { border-radius: 40% 60% 55% 45% / 48% 62% 38% 52%; }
-          40%  { border-radius: 55% 45% 38% 62% / 62% 44% 56% 38%; }
-          60%  { border-radius: 38% 62% 62% 38% / 42% 56% 44% 58%; }
-          80%  { border-radius: 60% 40% 44% 56% / 55% 38% 62% 45%; }
-          100% { border-radius: 62% 38% 34% 66% / 58% 32% 68% 42%; }
-        }
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
+          from { opacity:0; transform:translateY(16px); }
+          to   { opacity:1; transform:translateY(0); }
         }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
+        @keyframes gradShift {
+          0%,100% { background-position:0% 50%; }
+          50%     { background-position:100% 50%; }
         }
-        .blob {
-          position: absolute;
-          bottom: -220px;
-          background: radial-gradient(ellipse at 35% 35%,
-            rgba(60, 110, 255, 0.55),
-            rgba(30, 60, 200, 0.30) 55%,
-            rgba(10, 20, 100, 0.10)
-          );
-          filter: blur(8px);
-          animation:
-            blobRise  var(--dur) var(--delay) infinite linear,
-            blobMorph calc(var(--dur) * 0.65) var(--delay) infinite ease-in-out;
-          will-change: transform, border-radius;
+        .grad-text {
+          background: linear-gradient(90deg,#fdba74,#f97316,#fbbf24,#ef4444,#f97316);
+          background-size: 300% 300%;
+          animation: gradShift 4s ease infinite;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
-        .response-in {
-          animation: fadeUp 0.45s ease forwards;
-        }
-        .send-btn {
-          transition: background 0.18s, color 0.18s, transform 0.1s;
-        }
-        .send-btn:active { transform: scale(0.97); }
-        .dot-pulse {
-          animation: pulse 1.2s ease-in-out infinite;
-        }
+        .anim-0 { animation: fadeUp 0.7s 0.1s ease both; }
+        .anim-1 { animation: fadeUp 0.7s 0.25s ease both; }
+        .anim-2 { animation: fadeUp 0.7s 0.4s ease both; }
+        .anim-3 { animation: fadeUp 0.7s 0.55s ease both; }
+        .send-btn { transition: all 0.18s; }
+        .send-btn:hover:not(:disabled) { transform: scale(1.03); }
+        .send-btn:active:not(:disabled) { transform: scale(0.97); }
       `}</style>
 
-      <div style={{ minHeight: '100vh', background: '#070710', color: '#fff', fontFamily: "'Inter Tight', system-ui, sans-serif", position: 'relative' }}>
+      {/* ── Shader canvas (fixed behind everything) ── */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'fixed', inset: 0,
+          width: '100%', height: '100%',
+          zIndex: 0, pointerEvents: 'none',
+        }}
+      />
+      {/* Dark overlay so text is readable */}
+      <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.72)', zIndex: 1, pointerEvents: 'none' }} />
 
-        {/* ── Blob layer (fixed, behind everything) ── */}
-        <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
-          {BLOBS.map(b => (
-            <div
-              key={b.id}
-              className="blob"
-              style={{
-                '--dur':   `${b.dur}s`,
-                '--delay': `${b.delay}s`,
-                left:   `${b.left}%`,
-                width:  b.w,
-                height: b.h,
-              }}
-            />
-          ))}
-          {/* Radial vignette so blobs don't overpower the center */}
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #07071088 70%, #07071022 100%)' }} />
-        </div>
+      {/* ── All content ── */}
+      <div style={{ position: 'relative', zIndex: 2, minHeight: '100vh', color: '#fff', fontFamily: "'Inter Tight', system-ui, sans-serif" }}>
 
-        {/* ── Content (above blobs) ── */}
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* ── Floating navbar ── */}
+        <header style={{
+          position: 'fixed', top: 24, left: '50%', transform: 'translateX(-50%)',
+          zIndex: 50,
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          padding: '12px 24px',
+          borderRadius: menuOpen ? 18 : 9999,
+          border: '1px solid rgba(251,146,60,0.2)',
+          background: 'rgba(20,10,0,0.6)',
+          backdropFilter: 'blur(20px)',
+          width: 'calc(100% - 48px)', maxWidth: 560,
+          transition: 'border-radius 0.3s',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 24 }}>
+            <a href="/" style={{ fontSize: 16, fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', textDecoration: 'none' }}>Actionable</a>
+            <nav style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+              <a href="/stories" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Stories</a>
+              <a href="/login"   style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', border: '1px solid rgba(251,146,60,0.25)', borderRadius: 999, padding: '6px 14px' }}>Sign in</a>
+              <a href="/signup"  style={{ fontSize: 13, fontWeight: 700, color: '#000', textDecoration: 'none', background: 'linear-gradient(135deg,#f97316,#fbbf24)', borderRadius: 999, padding: '7px 16px' }}>Get started</a>
+            </nav>
+          </div>
+        </header>
 
-          {/* Nav */}
-          <nav style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '18px 24px',
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
-            position: 'sticky', top: 0, zIndex: 50,
-            background: 'rgba(7,7,16,0.75)',
-            backdropFilter: 'blur(24px)',
+        {/* ── Hero ── */}
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          padding: '100px 24px 80px', textAlign: 'center',
+        }}>
+
+          {/* Trust badge */}
+          <div className="anim-0" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '7px 18px',
+            border: '1px solid rgba(251,146,60,0.3)',
+            borderRadius: 999,
+            background: 'rgba(251,146,60,0.08)',
+            fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+            color: 'rgba(253,186,116,0.9)',
+            marginBottom: 28,
           }}>
-            <a href="/" style={{ fontSize: 18, fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', textDecoration: 'none' }}>Actionable</a>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <a href="/stories" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '8px 16px', color: 'rgba(255,255,255,0.5)', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>Stories</a>
-              <a href="/login"   style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '8px 16px', color: 'rgba(255,255,255,0.5)', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>Sign in</a>
-              <a href="/signup"  style={{ background: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', color: '#000', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Get started</a>
-            </div>
-          </nav>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#f97316', boxShadow: '0 0 8px #f97316' }} />
+            One free message · Make it count
+          </div>
 
-          {/* ── Hero ── */}
-          <div style={{
-            minHeight: 'calc(100vh - 61px)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: '60px 24px 80px',
-            textAlign: 'center',
-          }}>
+          {/* Headline */}
+          <h1 className="anim-1" style={{ fontSize: 'clamp(44px, 8vw, 88px)', fontWeight: 900, lineHeight: 1.0, letterSpacing: '-0.045em', margin: '0 0 20px' }}>
+            <span className="grad-text">What's your<br />situation?</span>
+          </h1>
 
-            {/* One-message badge */}
+          <p className="anim-2" style={{ fontSize: 'clamp(15px, 2vw, 18px)', color: 'rgba(255,255,255,0.45)', lineHeight: 1.65, margin: '0 0 40px', maxWidth: 440 }}>
+            One shot. Lay it all out — income, debt, goals, what's held you back. Get a real plan built for your exact life.
+          </p>
+
+          {/* ── AI chat bar ── */}
+          <div className="anim-3" style={{ width: '100%', maxWidth: 660 }}>
             <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: 100,
-              padding: '6px 16px',
-              marginBottom: 32,
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.35)',
-              background: 'rgba(255,255,255,0.03)',
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ade80', flexShrink: 0, boxShadow: '0 0 6px #4ade80' }} className="dot-pulse" />
-              One free message · Make it count
-            </div>
-
-            {/* Headline */}
-            <h1 style={{
-              fontSize: 'clamp(42px, 8vw, 80px)',
-              fontWeight: 900, lineHeight: 1.0, letterSpacing: '-0.045em',
-              margin: '0 0 18px', color: '#fff', maxWidth: 660,
-            }}>
-              What's your<br />situation?
-            </h1>
-
-            <p style={{
-              fontSize: 'clamp(15px, 2vw, 17px)',
-              color: 'rgba(255,255,255,0.35)',
-              lineHeight: 1.65, margin: '0 0 44px',
-              maxWidth: 440,
-            }}>
-              One shot. Lay it all out — income, debt, goals, what's held you back. Get a real plan built for your exact life.
-            </p>
-
-            {/* ── Chat box ── */}
-            <div style={{
-              width: '100%', maxWidth: 660,
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.09)',
-              borderRadius: 22,
+              background: 'rgba(20,10,0,0.75)',
+              border: '1px solid rgba(251,146,60,0.25)',
+              borderRadius: 20,
               overflow: 'hidden',
-              backdropFilter: 'blur(28px)',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.03) inset, 0 32px 64px -16px rgba(0,0,0,0.6)',
+              backdropFilter: 'blur(24px)',
+              boxShadow: '0 0 0 1px rgba(249,115,22,0.08) inset, 0 24px 64px -12px rgba(0,0,0,0.7)',
             }}>
 
-              {/* Warning banner — only before sending */}
+              {/* One-message warning */}
               {!response && (
                 <div style={{
-                  padding: '13px 20px',
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
+                  padding: '12px 20px',
+                  borderBottom: '1px solid rgba(251,146,60,0.12)',
                   display: 'flex', alignItems: 'flex-start', gap: 10,
-                  background: 'rgba(255,200,50,0.03)',
+                  background: 'rgba(249,115,22,0.05)',
                 }}>
-                  <span style={{ fontSize: 14, marginTop: 1 }}>⚡</span>
+                  <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>⚡</span>
                   <p style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(255,255,255,0.35)', margin: 0 }}>
-                    <span style={{ color: 'rgba(255,255,255,0.65)', fontWeight: 700 }}>You have one free message.</span>{' '}
-                    The more specific you are — exact income, total debt, real goals, what you've already tried — the more useful your plan will be. Don't rush this.
+                    <span style={{ color: 'rgba(253,186,116,0.9)', fontWeight: 700 }}>You have one free message.</span>{' '}
+                    Include your exact income, total debt, real goals, and what you've already tried. The more specific, the better your plan.
                   </p>
                 </div>
               )}
 
-              {/* Input area */}
+              {/* Input */}
               {!trialUsed && (
                 <>
                   <textarea
                     style={{
                       width: '100%', background: 'transparent', border: 'none',
-                      padding: '22px 22px 12px',
+                      padding: '20px 22px 10px',
                       color: '#fff', fontSize: 15, fontFamily: 'inherit',
                       resize: 'none', outline: 'none', lineHeight: 1.75,
-                      boxSizing: 'border-box', minHeight: 180,
-                      caretColor: '#6080ff',
+                      boxSizing: 'border-box', minHeight: 160,
+                      caretColor: '#f97316',
                     }}
-                    placeholder={"I make $X/month, have $X in debt (credit cards, student loans, car…), want to X by X. I've tried Y but Z. My biggest obstacle right now is…"}
+                    placeholder="I make $X/month, have $X in debt (credit cards, student loans, car…), want to X by X. I've tried Y but Z. My biggest obstacle is…"
                     value={scenario}
                     onChange={e => setScenario(e.target.value)}
                     maxLength={1500}
-                    onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runFreeTrial(); }}
+                    onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submit(); }}
                   />
 
-                  {/* Footer bar */}
                   <div style={{
-                    padding: '12px 18px',
-                    borderTop: '1px solid rgba(255,255,255,0.05)',
+                    padding: '10px 16px',
+                    borderTop: '1px solid rgba(251,146,60,0.1)',
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
                       <span style={{ fontSize: 12, color: hint.color, transition: 'color 0.4s', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         {hint.text}
                       </span>
-                      <span style={{ fontSize: 11, color: '#2a2a3a', flexShrink: 0 }}>{scenario.length}/1500</span>
+                      <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.12)', flexShrink: 0 }}>{scenario.length}/1500</span>
                     </div>
                     <button
                       className="send-btn"
-                      onClick={runFreeTrial}
+                      onClick={submit}
                       disabled={!canSend}
                       style={{
                         display: 'flex', alignItems: 'center', gap: 6,
-                        background: canSend ? '#fff' : 'rgba(255,255,255,0.07)',
+                        background: canSend
+                          ? 'linear-gradient(135deg,#f97316,#fbbf24)'
+                          : 'rgba(255,255,255,0.06)',
                         color: canSend ? '#000' : 'rgba(255,255,255,0.2)',
                         border: 'none', borderRadius: 11,
                         padding: '11px 22px',
@@ -274,132 +357,120 @@ export default function Landing() {
                         fontFamily: 'inherit', flexShrink: 0,
                       }}
                     >
-                      {loading ? (
-                        <>
-                          <span className="dot-pulse">●</span> Building your plan...
-                        </>
-                      ) : (
-                        <>Send →</>
-                      )}
+                      Send →
                     </button>
                   </div>
                 </>
               )}
 
-              {/* Response */}
-              {response && (
-                <div className="response-in">
-                  <div style={{ padding: '26px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 18 }}>
-                      Your plan
-                    </div>
-                    <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.82)', lineHeight: 1.82, whiteSpace: 'pre-wrap' }}>
-                      {response}
-                    </div>
-                  </div>
-                  <div style={{
-                    padding: '20px 24px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
-                    background: 'rgba(255,255,255,0.02)',
-                  }}>
-                    <div>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>Want the full roadmap?</div>
-                      <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 3 }}>
-                        Unlimited sessions · Photo analysis · Progress tracking · $15/mo
-                      </div>
-                    </div>
-                    <a href="/signup" style={{
-                      background: '#fff', color: '#000', borderRadius: 11,
-                      padding: '12px 24px', fontSize: 13, fontWeight: 700,
-                      textDecoration: 'none', flexShrink: 0,
-                    }}>
-                      Start for $15/mo →
-                    </a>
-                  </div>
+              {/* Loading state */}
+              {loading && (
+                <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+                  <PulseLoader />
+                  <p style={{ fontSize: 13, color: 'rgba(253,186,116,0.7)', margin: 0 }}>Building your plan…</p>
                 </div>
               )}
-            </div>
 
-            {!response && (
-              <p style={{ marginTop: 20, fontSize: 12, color: 'rgba(255,255,255,0.12)' }}>
-                ↓ See everything included
-              </p>
-            )}
-          </div>
-
-          {/* ── Features ── */}
-          <div style={{ maxWidth: 960, margin: '0 auto', padding: '80px 24px' }}>
-            <div style={{ textAlign: 'center', marginBottom: 48 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Everything you need</div>
-              <h2 style={{ fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>Built for people who move different</h2>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
-              {FEATURES.map(f => (
-                <div key={f.title} style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  borderRadius: 16, padding: '24px',
-                }}>
-                  <div style={{ fontSize: 24, marginBottom: 12 }}>{f.icon}</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 6 }}>{f.title}</div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>{f.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Pricing ── */}
-          <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 24px 100px' }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Simple pricing</div>
-            <h2 style={{ fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 40px', color: '#fff' }}>One coach. Two plans.</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
-              {/* Basic */}
-              <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: '32px 28px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>Basic</div>
-                <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$15</div>
-                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', marginBottom: 24 }}>per month</div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
-                  {['Unlimited AI coaching sessions','Photo & document analysis','Voice input','Full chat history','Progress roadmap','Community stories','Mobile app (PWA)'].map(f => (
-                    <li key={f} style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 8 }}>
-                      <span style={{ color: '#4ade80' }}>✓</span>{f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="/signup?plan=basic" style={{ display: 'block', width: '100%', background: 'rgba(255,255,255,0.1)', color: '#fff', border: 'none', borderRadius: 10, padding: '14px', fontSize: 14, fontWeight: 700, textAlign: 'center', textDecoration: 'none', boxSizing: 'border-box' }}>
-                  Get Basic →
-                </a>
-              </div>
-
-              {/* Pro */}
-              <div style={{ background: '#fff', borderRadius: 20, padding: '32px 28px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>Pro — Most popular</div>
-                <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#000', margin: '0 0 4px' }}>$49</div>
-                <div style={{ fontSize: 13, color: '#777', marginBottom: 24 }}>per month</div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
-                  {['Everything in Basic','Weekly AI progress reports','Priority response speed','Downloadable financial plans','Referral program — give & get free months','Early access to new features'].map(f => (
-                    <li key={f} style={{ fontSize: 14, color: '#333', padding: '6px 0', borderBottom: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 8 }}>
-                      <span>✓</span>{f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="/signup?plan=pro" style={{ display: 'block', width: '100%', background: '#000', color: '#fff', border: 'none', borderRadius: 10, padding: '14px', fontSize: 14, fontWeight: 700, textAlign: 'center', textDecoration: 'none', boxSizing: 'border-box' }}>
-                  Get Pro →
-                </a>
-              </div>
+              {/* Response */}
+              <AnimatePresence>
+                {response && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div style={{ padding: '26px 24px', borderBottom: '1px solid rgba(251,146,60,0.1)' }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 16 }}>
+                        Your plan
+                      </div>
+                      <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)', lineHeight: 1.82, whiteSpace: 'pre-wrap' }}>
+                        {response}
+                      </div>
+                    </div>
+                    <div style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', background: 'rgba(249,115,22,0.04)' }}>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>Want the full roadmap?</div>
+                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 3 }}>Unlimited sessions · Progress tracking · $15/mo</div>
+                      </div>
+                      <a href="/signup" style={{ background: 'linear-gradient(135deg,#f97316,#fbbf24)', color: '#000', borderRadius: 11, padding: '12px 24px', fontSize: 13, fontWeight: 700, textDecoration: 'none', flexShrink: 0 }}>
+                        Start for $15/mo →
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
-          {/* Footer */}
-          <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '32px 24px', textAlign: 'center' }}>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)' }}>© {new Date().getFullYear()} Actionable AI. Built for people who move different.</div>
-            <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 12 }}>
-              {[['Privacy','/privacy'],['Terms','/terms'],['Stories','/stories']].map(([l,h]) => (
-                <a key={l} href={h} style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}>{l}</a>
-              ))}
-            </div>
-          </footer>
-
+          {!response && !loading && (
+            <p style={{ marginTop: 18, fontSize: 12, color: 'rgba(255,255,255,0.12)' }}>↓ See what's included</p>
+          )}
         </div>
+
+        {/* ── Features ── */}
+        <div style={{ maxWidth: 960, margin: '0 auto', padding: '80px 24px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Everything you need</div>
+            <h2 style={{ fontSize: 'clamp(28px,5vw,48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>Built for people who move different</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
+            {FEATURES.map(f => (
+              <div key={f.title} style={{ background: 'rgba(20,10,0,0.6)', border: '1px solid rgba(251,146,60,0.12)', borderRadius: 16, padding: '24px', backdropFilter: 'blur(12px)' }}>
+                <div style={{ fontSize: 24, marginBottom: 12 }}>{f.icon}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 6 }}>{f.title}</div>
+                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>{f.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Pricing ── */}
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '40px 24px 100px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Simple pricing</div>
+          <h2 style={{ fontSize: 'clamp(28px,5vw,48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 40px', color: '#fff' }}>One coach. Two plans.</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
+            <div style={{ background: 'rgba(20,10,0,0.6)', border: '1px solid rgba(251,146,60,0.15)', borderRadius: 20, padding: '32px 28px', backdropFilter: 'blur(12px)' }}>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>Basic</div>
+              <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$15</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', marginBottom: 24 }}>per month</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
+                {['Unlimited AI coaching','Photo & document analysis','Voice input','Full chat history','Progress roadmap','Community stories','Mobile app (PWA)'].map(f => (
+                  <li key={f} style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 8 }}>
+                    <span style={{ color: '#f97316' }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <a href="/signup?plan=basic" style={{ display: 'block', textAlign: 'center', border: '1px solid rgba(251,146,60,0.3)', borderRadius: 10, padding: 14, fontSize: 14, fontWeight: 700, color: '#fdba74', textDecoration: 'none', boxSizing: 'border-box' }}>
+                Get Basic →
+              </a>
+            </div>
+            <div style={{ background: 'linear-gradient(135deg,rgba(249,115,22,0.15),rgba(251,191,36,0.1))', border: '1px solid rgba(251,146,60,0.4)', borderRadius: 20, padding: '32px 28px', backdropFilter: 'blur(12px)' }}>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#fb923c', marginBottom: 12 }}>Pro — Most popular</div>
+              <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$49</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 24 }}>per month</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
+                {['Everything in Basic','Weekly AI progress reports','Priority response speed','Downloadable financial plans','Referral — give & get free months','Early access to features'].map(f => (
+                  <li key={f} style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', padding: '6px 0', borderBottom: '1px solid rgba(251,146,60,0.08)', display: 'flex', gap: 8 }}>
+                    <span style={{ color: '#f97316' }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <a href="/signup?plan=pro" style={{ display: 'block', textAlign: 'center', background: 'linear-gradient(135deg,#f97316,#fbbf24)', borderRadius: 10, padding: 14, fontSize: 14, fontWeight: 700, color: '#000', textDecoration: 'none', boxSizing: 'border-box' }}>
+                Get Pro →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer style={{ borderTop: '1px solid rgba(251,146,60,0.1)', padding: '32px 24px', textAlign: 'center' }}>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)' }}>© {new Date().getFullYear()} Actionable AI. Built for people who move different.</div>
+          <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 12 }}>
+            {[['Privacy','/privacy'],['Terms','/terms'],['Stories','/stories']].map(([l,h]) => (
+              <a key={l} href={h} style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}>{l}</a>
+            ))}
+          </div>
+        </footer>
       </div>
     </>
   );
