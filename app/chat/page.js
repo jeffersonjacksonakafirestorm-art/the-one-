@@ -1,6 +1,16 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+function cleanText(t) {
+  return t
+    .replace(/\*\*([^*\n]+)\*\*/g, '$1')
+    .replace(/\*([^*\n]+)\*/g, '$1')
+    .replace(/#{1,6} /gm, '')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/__([^_\n]+)__/g, '$1')
+    .replace(/_([^_\n]+)_/g, '$1');
+}
+
 const s = {
   page: { display: 'flex', height: '100vh', background: '#000', fontFamily: "'Inter Tight', system-ui, sans-serif", overflow: 'hidden' },
   sidebar: { width: 260, borderRight: '1px solid #111', display: 'flex', flexDirection: 'column', flexShrink: 0, overflow: 'hidden' },
@@ -273,7 +283,7 @@ export default function Chat() {
                     <div style={{ ...s.dot, animationDelay: '0.2s' }} />
                     <div style={{ ...s.dot, animationDelay: '0.4s' }} />
                   </div>
-                ) : msg.content}
+                ) : msg.role === 'assistant' ? cleanText(msg.content) : msg.content}
               </div>
             </div>
           ))}

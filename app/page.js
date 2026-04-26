@@ -174,7 +174,18 @@ export default function Landing() {
         body: JSON.stringify({ scenario: scenario.trim() }),
       });
       const data = await res.json();
-      setResponse(data.error ? 'Something went wrong. Please try again.' : data.response);
+      if (data.error) {
+        setResponse('Something went wrong. Please try again.');
+      } else {
+        const clean = t => t
+          .replace(/\*\*([^*\n]+)\*\*/g, '$1')
+          .replace(/\*([^*\n]+)\*/g, '$1')
+          .replace(/#{1,6} /gm, '')
+          .replace(/`([^`]+)`/g, '$1')
+          .replace(/__([^_\n]+)__/g, '$1')
+          .replace(/_([^_\n]+)_/g, '$1');
+        setResponse(clean(data.response));
+      }
       if (!data.error) {
         setTrialUsed(true);
         if (typeof localStorage !== 'undefined') localStorage.setItem('actionable_trial_used', '1');
