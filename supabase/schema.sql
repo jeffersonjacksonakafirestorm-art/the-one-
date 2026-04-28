@@ -129,8 +129,14 @@ drop policy if exists "service_role_all" on chats;
 drop policy if exists "service_role_all" on messages;
 drop policy if exists "service_role_all" on stories;
 drop policy if exists "service_role_all" on free_trial_sessions;
-drop policy if exists "svc_story_likes"    on story_likes;
-drop policy if exists "svc_story_comments" on story_comments;
+drop policy if exists "svc_users"               on users;
+drop policy if exists "svc_verification_codes"  on verification_codes;
+drop policy if exists "svc_chats"               on chats;
+drop policy if exists "svc_messages"            on messages;
+drop policy if exists "svc_stories"             on stories;
+drop policy if exists "svc_free_trial"          on free_trial_sessions;
+drop policy if exists "svc_story_likes"         on story_likes;
+drop policy if exists "svc_story_comments"      on story_comments;
 
 -- Create clean policies
 create policy "svc_users"               on users               for all using (true);
