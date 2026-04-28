@@ -1,7 +1,6 @@
 'use client';
 import { useState, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import ShaderBackground from '@/components/ShaderBackground';
 
 function VerifyForm() {
   const params  = useSearchParams();
@@ -96,7 +95,7 @@ function VerifyForm() {
         .auth-btn:active:not(:disabled) { transform: scale(0.98); }
       `}</style>
 
-      <ShaderBackground />
+      <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.18) 0%, transparent 70%), linear-gradient(180deg,#0f0600 0%,#080300 100%)', zIndex: 0 }} />
 
       <div style={{
         position: 'relative', zIndex: 2,

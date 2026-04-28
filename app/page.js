@@ -256,8 +256,13 @@ export default function Landing() {
           padding: '100px 24px 80px', textAlign: 'center',
         }}>
 
+          {/* Headline */}
+          <h1 className="anim-0" style={{ fontSize: 'clamp(44px, 8vw, 88px)', fontWeight: 900, lineHeight: 1.0, letterSpacing: '-0.045em', margin: '0 0 24px' }}>
+            <span className="grad-text">What's your<br />situation?</span>
+          </h1>
+
           {/* Trust badge */}
-          <div className="anim-0" style={{
+          <div className="anim-1" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             padding: '7px 18px',
             border: '1px solid rgba(251,146,60,0.3)',
@@ -265,23 +270,14 @@ export default function Landing() {
             background: 'rgba(251,146,60,0.08)',
             fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
             color: 'rgba(253,186,116,0.9)',
-            marginBottom: 28,
+            marginBottom: 32,
           }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#f97316', boxShadow: '0 0 8px #f97316' }} />
             One free message · Make it count
           </div>
 
-          {/* Headline */}
-          <h1 className="anim-1" style={{ fontSize: 'clamp(44px, 8vw, 88px)', fontWeight: 900, lineHeight: 1.0, letterSpacing: '-0.045em', margin: '0 0 20px' }}>
-            <span className="grad-text">What's your<br />situation?</span>
-          </h1>
-
-          <p className="anim-2" style={{ fontSize: 'clamp(15px, 2vw, 18px)', color: 'rgba(255,255,255,0.45)', lineHeight: 1.65, margin: '0 0 40px', maxWidth: 440 }}>
-            One shot. Lay it all out — income, debt, goals, what's held you back. Get a real plan built for your exact life.
-          </p>
-
           {/* ── AI chat bar ── */}
-          <div className="anim-3" style={{ width: '100%', maxWidth: 660 }}>
+          <div className="anim-2" style={{ width: '100%', maxWidth: 660 }}>
             <div style={{
               background: 'rgba(20,10,0,0.75)',
               border: '1px solid rgba(251,146,60,0.25)',

@@ -73,6 +73,26 @@ create table if not exists free_trial_sessions (
   created_at timestamptz default now()
 );
 
+create table if not exists story_likes (
+  id uuid primary key default gen_random_uuid(),
+  story_id uuid references stories(id) on delete cascade,
+  user_id uuid references users(id) on delete cascade,
+  created_at timestamptz default now(),
+  unique(story_id, user_id)
+);
+
+create table if not exists story_comments (
+  id uuid primary key default gen_random_uuid(),
+  story_id uuid references stories(id) on delete cascade,
+  user_id uuid references users(id) on delete cascade,
+  content text not null,
+  created_at timestamptz default now()
+);
+
+-- ── Column additions (safe on re-run) ─────────────────────────────────────────
+
+alter table users add column if not exists name text;
+
 -- ── Indexes ───────────────────────────────────────────────────────────────────
 
 create index if not exists idx_chats_user_id        on chats(user_id);
@@ -81,15 +101,20 @@ create index if not exists idx_stories_created      on stories(created_at desc);
 create index if not exists idx_verification_email   on verification_codes(email);
 create index if not exists idx_users_session        on users(session_token);
 create index if not exists idx_free_trial_ip        on free_trial_sessions(ip);
+create index if not exists idx_story_likes_story    on story_likes(story_id);
+create index if not exists idx_story_likes_user     on story_likes(user_id);
+create index if not exists idx_story_comments_story on story_comments(story_id);
 
 -- ── Row Level Security ────────────────────────────────────────────────────────
 
-alter table users              enable row level security;
-alter table verification_codes enable row level security;
-alter table chats              enable row level security;
-alter table messages           enable row level security;
-alter table stories            enable row level security;
+alter table users               enable row level security;
+alter table verification_codes  enable row level security;
+alter table chats               enable row level security;
+alter table messages            enable row level security;
+alter table stories             enable row level security;
 alter table free_trial_sessions enable row level security;
+alter table story_likes         enable row level security;
+alter table story_comments      enable row level security;
 
 -- Drop old policies if they exist (prevents "already exists" errors on re-run)
 drop policy if exists "Service role full access" on users;
@@ -104,12 +129,15 @@ drop policy if exists "service_role_all" on chats;
 drop policy if exists "service_role_all" on messages;
 drop policy if exists "service_role_all" on stories;
 drop policy if exists "service_role_all" on free_trial_sessions;
+drop policy if exists "svc_story_likes"    on story_likes;
+drop policy if exists "svc_story_comments" on story_comments;
 
--- Create clean policies (service role key used by all API routes bypasses RLS anyway,
--- but these are needed for anon key access if ever used)
+-- Create clean policies
 create policy "svc_users"               on users               for all using (true);
 create policy "svc_verification_codes"  on verification_codes  for all using (true);
 create policy "svc_chats"               on chats               for all using (true);
 create policy "svc_messages"            on messages            for all using (true);
 create policy "svc_stories"             on stories             for all using (true);
 create policy "svc_free_trial"          on free_trial_sessions for all using (true);
+create policy "svc_story_likes"         on story_likes         for all using (true);
+create policy "svc_story_comments"      on story_comments      for all using (true);
