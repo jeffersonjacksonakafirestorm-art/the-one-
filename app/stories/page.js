@@ -1,35 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-
-const s = {
-  page: { minHeight: '100vh', background: '#000', color: '#fff', fontFamily: "'Inter Tight', system-ui, sans-serif" },
-  nav: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', borderBottom: '1px solid #111', position: 'sticky', top: 0, background: '#000', zIndex: 10 },
-  logo: { fontSize: 18, fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', textDecoration: 'none' },
-  navRight: { display: 'flex', gap: 8, alignItems: 'center' },
-  btn: { background: '#fff', color: '#000', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none' },
-  ghostBtn: { background: 'none', border: '1px solid #222', borderRadius: 8, padding: '8px 14px', fontSize: 13, color: '#888', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'none' },
-  hero: { padding: '60px 24px 40px', maxWidth: 760, margin: '0 auto', textAlign: 'center' },
-  h1: { fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 12px' },
-  sub: { fontSize: 16, color: '#666', lineHeight: 1.6 },
-  content: { maxWidth: 760, margin: '0 auto', padding: '0 24px 64px' },
-  postBox: { background: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: 20, padding: '28px', marginBottom: 32 },
-  postTitle: { fontSize: 16, fontWeight: 700, marginBottom: 12 },
-  input: { width: '100%', background: '#111', border: '1px solid #222', borderRadius: 8, padding: '11px 14px', color: '#fff', fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', marginBottom: 10 },
-  textarea: { width: '100%', background: '#111', border: '1px solid #222', borderRadius: 8, padding: '11px 14px', color: '#fff', fontSize: 14, fontFamily: 'inherit', outline: 'none', resize: 'none', minHeight: 100, boxSizing: 'border-box', marginBottom: 10, lineHeight: 1.6 },
-  submitBtn: { background: '#fff', color: '#000', border: 'none', borderRadius: 8, padding: '10px 20px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' },
-  storyGrid: { display: 'flex', flexDirection: 'column', gap: 12 },
-  storyCard: { background: '#0a0a0a', border: '1px solid #1a1a1a', borderRadius: 16, padding: '22px' },
-  storyTitle: { fontSize: 17, fontWeight: 700, marginBottom: 8, color: '#fff' },
-  storyContent: { fontSize: 14, color: '#888', lineHeight: 1.7, marginBottom: 14 },
-  storyMeta: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 12, color: '#444' },
-  flagBtn: { background: 'none', border: 'none', color: '#333', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', padding: 0 },
-  loading: { textAlign: 'center', padding: '48px', color: '#555' },
-  empty: { textAlign: 'center', padding: '48px', color: '#555' },
-};
+import ShaderBackground from '@/components/ShaderBackground';
 
 function timeAgo(date) {
-  const d = new Date(date);
-  const diff = (Date.now() - d.getTime()) / 1000;
+  const diff = (Date.now() - new Date(date).getTime()) / 1000;
   if (diff < 60) return 'just now';
   if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
@@ -37,17 +11,20 @@ function timeAgo(date) {
 }
 
 export default function Stories() {
-  const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [canPost, setCanPost] = useState(false);
-  const [form, setForm] = useState({ title: '', content: '' });
-  const [posting, setPosting] = useState(false);
-  const [flagged, setFlagged] = useState(new Set());
+  const [stories, setStories]     = useState([]);
+  const [loading, setLoading]     = useState(true);
+  const [user, setUser]           = useState(null);
+  const [form, setForm]           = useState({ title: '', content: '' });
+  const [posting, setPosting]     = useState(false);
+  const [postErr, setPostErr]     = useState('');
+  const [flagged, setFlagged]     = useState(new Set());
+  const [editing, setEditing]     = useState(null); // story id being edited
+  const [editForm, setEditForm]   = useState({ title: '', content: '' });
 
   useEffect(() => {
     loadStories();
     fetch('/api/auth/me').then(r => r.json()).then(d => {
-      if (d.user && ['basic', 'pro'].includes(d.user.plan)) setCanPost(true);
+      if (d.user) setUser(d.user);
     }).catch(() => {});
   }, []);
 
@@ -65,19 +42,38 @@ export default function Stories() {
     e.preventDefault();
     if (!form.title.trim() || !form.content.trim()) return;
     setPosting(true);
+    setPostErr('');
     try {
       const res = await fetch('/api/stories', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (res.ok) {
-        const data = await res.json();
-        setStories(s => [data.story, ...s]);
-        setForm({ title: '', content: '' });
-      }
-    } catch {}
+      const data = await res.json();
+      if (!res.ok) { setPostErr(data.error || 'Failed to post.'); setPosting(false); return; }
+      setStories(s => [data.story, ...s]);
+      setForm({ title: '', content: '' });
+    } catch { setPostErr('Something went wrong.'); }
     setPosting(false);
+  }
+
+  async function deleteStory(id) {
+    if (!confirm('Delete this story?')) return;
+    await fetch(`/api/stories/${id}`, { method: 'DELETE' });
+    setStories(s => s.filter(x => x.id !== id));
+  }
+
+  async function saveEdit(id) {
+    const res = await fetch(`/api/stories/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editForm),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setStories(s => s.map(x => x.id === id ? data.story : x));
+      setEditing(null);
+    }
   }
 
   async function flagStory(id) {
@@ -86,60 +82,118 @@ export default function Stories() {
     await fetch(`/api/stories/${id}/flag`, { method: 'POST' });
   }
 
+  const card = {
+    background: 'rgba(20,10,0,0.65)',
+    border: '1px solid rgba(251,146,60,0.15)',
+    borderRadius: 16,
+    padding: '22px 24px',
+    backdropFilter: 'blur(12px)',
+  };
+
   return (
-    <div style={s.page}>
-      <nav style={s.nav}>
-        <a href="/" style={s.logo}>Actionable</a>
-        <div style={s.navRight}>
-          <a href="/chat" style={s.ghostBtn}>Open Coach</a>
-          <a href="/signup" style={s.btn}>Get started</a>
+    <>
+      <style>{`
+        .story-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(251,146,60,0.15); border-radius:10px; padding:11px 14px; color:#fff; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box; margin-bottom:10px; line-height:1.6; }
+        .story-input:focus { border-color:rgba(249,115,22,0.5); }
+        textarea.story-input { resize:none; min-height:100px; }
+        .story-btn { background:linear-gradient(135deg,#f97316,#fbbf24); color:#000; border:none; border-radius:8px; padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; transition:opacity 0.18s; }
+        .story-btn:disabled { opacity:0.5; }
+        .ghost-btn { background:none; border:1px solid rgba(251,146,60,0.2); border-radius:8px; padding:8px 14px; font-size:13px; color:rgba(255,255,255,0.4); cursor:pointer; font-family:inherit; }
+        .ghost-btn:hover { border-color:rgba(251,146,60,0.4); color:rgba(255,255,255,0.7); }
+        .danger-btn { background:none; border:none; font-size:12px; color:rgba(239,68,68,0.5); cursor:pointer; font-family:inherit; padding:0; }
+        .danger-btn:hover { color:#f87171; }
+      `}</style>
+
+      <ShaderBackground />
+
+      <div style={{ position: 'relative', zIndex: 2, minHeight: '100vh', color: '#fff', fontFamily: "'Inter Tight', system-ui, sans-serif" }}>
+
+        {/* Nav */}
+        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px' }}>
+          <a href="/" style={{ fontSize: 18, fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', textDecoration: 'none' }}>Actionable</a>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            {user ? (
+              <a href="/chat" style={{ background: 'linear-gradient(135deg,#f97316,#fbbf24)', color: '#000', borderRadius: 999, padding: '8px 18px', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Open Coach →</a>
+            ) : (
+              <>
+                <a href="/login" style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textDecoration: 'none', border: '1px solid rgba(251,146,60,0.2)', borderRadius: 999, padding: '7px 14px' }}>Sign in</a>
+                <a href="/signup" style={{ background: 'linear-gradient(135deg,#f97316,#fbbf24)', color: '#000', borderRadius: 999, padding: '8px 18px', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Get started</a>
+              </>
+            )}
+          </div>
+        </nav>
+
+        {/* Hero */}
+        <div style={{ padding: '48px 24px 36px', maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
+          <h1 style={{ fontSize: 'clamp(32px,6vw,52px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 12px' }}>Real stories.<br />Real people.</h1>
+          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, margin: 0 }}>People who were in rough spots and built their way out.</p>
         </div>
-      </nav>
 
-      <div style={s.hero}>
-        <h1 style={s.h1}>Real stories.<br />Real people.</h1>
-        <p style={s.sub}>People who were in rough spots — and built their way out. No fluff. No filters.</p>
-      </div>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px 80px' }}>
 
-      <div style={s.content}>
-        {canPost && (
-          <div style={s.postBox}>
-            <div style={s.postTitle}>Share your story</div>
-            <form onSubmit={postStory}>
-              <input style={s.input} placeholder="Title — e.g. 'How I went from $0 to $4k/month in 8 months'" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required maxLength={120} />
-              <textarea style={s.textarea} placeholder="Tell your story. Where you were, what you did, where you are now. Be real — that's what helps people." value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} required maxLength={2000} />
-              <button type="submit" style={{ ...s.submitBtn, opacity: posting ? 0.6 : 1 }} disabled={posting}>
-                {posting ? 'Posting...' : 'Post story →'}
-              </button>
-            </form>
-          </div>
-        )}
-
-        {!canPost && (
-          <div style={{ ...s.postBox, textAlign: 'center' }}>
-            <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 8 }}>Want to share your story?</div>
-            <div style={{ fontSize: 14, color: '#555', marginBottom: 16 }}>Subscribe to Actionable to post your breakthrough moment.</div>
-            <a href="/signup" style={{ ...s.btn, display: 'inline-block' }}>Get started →</a>
-          </div>
-        )}
-
-        <div style={s.storyGrid}>
-          {loading && <div style={s.loading}>Loading stories...</div>}
-          {!loading && stories.length === 0 && <div style={s.empty}>No stories yet — be the first to share yours.</div>}
-          {stories.map(story => (
-            <div key={story.id} style={s.storyCard}>
-              <div style={s.storyTitle}>{story.title}</div>
-              <div style={s.storyContent}>{story.content}</div>
-              <div style={s.storyMeta}>
-                <span>{timeAgo(story.created_at)}</span>
-                <button style={s.flagBtn} onClick={() => flagStory(story.id)}>
-                  {flagged.has(story.id) ? 'Reported' : '⚑ Report'}
-                </button>
-              </div>
+          {/* Post form */}
+          {user ? (
+            <div style={{ ...card, marginBottom: 28 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 14, color: '#fff' }}>Share your story</div>
+              {postErr && <div style={{ fontSize: 13, color: '#f87171', marginBottom: 12 }}>{postErr}</div>}
+              <form onSubmit={postStory}>
+                <input className="story-input" placeholder="Title — e.g. 'From broke to $4k/month in 8 months'" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required maxLength={120} />
+                <textarea className="story-input" placeholder="Tell your story. Where you were, what you did, where you are now. Be real." value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} required maxLength={2000} />
+                <button type="submit" className="story-btn" disabled={posting}>{posting ? 'Posting...' : 'Post story →'}</button>
+              </form>
             </div>
-          ))}
+          ) : (
+            <div style={{ ...card, marginBottom: 28, textAlign: 'center' }}>
+              <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 8 }}>Have a breakthrough to share?</div>
+              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>Sign in or create a free account to post your story.</div>
+              <a href="/login" style={{ display: 'inline-block', background: 'linear-gradient(135deg,#f97316,#fbbf24)', color: '#000', borderRadius: 10, padding: '10px 24px', fontSize: 14, fontWeight: 700, textDecoration: 'none' }}>Sign in to post →</a>
+            </div>
+          )}
+
+          {/* Stories */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {loading && <div style={{ textAlign: 'center', padding: 48, color: 'rgba(255,255,255,0.3)' }}>Loading...</div>}
+            {!loading && stories.length === 0 && (
+              <div style={{ textAlign: 'center', padding: 48, color: 'rgba(255,255,255,0.3)' }}>No stories yet — be the first to share yours.</div>
+            )}
+            {stories.map(story => (
+              <div key={story.id} style={card}>
+                {editing === story.id ? (
+                  <>
+                    <input className="story-input" value={editForm.title} onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))} />
+                    <textarea className="story-input" value={editForm.content} onChange={e => setEditForm(f => ({ ...f, content: e.target.value }))} />
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button className="story-btn" onClick={() => saveEdit(story.id)}>Save</button>
+                      <button className="ghost-btn" onClick={() => setEditing(null)}>Cancel</button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 8, color: '#fff' }}>{story.title}</div>
+                    <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.75, marginBottom: 14, whiteSpace: 'pre-wrap' }}>{story.content}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 12 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.2)' }}>{timeAgo(story.created_at)}</span>
+                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                        {user?.id === story.user_id && (
+                          <>
+                            <button className="ghost-btn" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => { setEditing(story.id); setEditForm({ title: story.title, content: story.content }); }}>Edit</button>
+                            <button className="danger-btn" onClick={() => deleteStory(story.id)}>Delete</button>
+                          </>
+                        )}
+                        {(!user || user.id !== story.user_id) && (
+                          <button style={{ background: 'none', border: 'none', fontSize: 12, color: 'rgba(255,255,255,0.2)', cursor: 'pointer', fontFamily: 'inherit', padding: 0 }} onClick={() => flagStory(story.id)}>
+                            {flagged.has(story.id) ? 'Reported' : 'Report'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -146,15 +146,6 @@ function detailHint(len) {
   return             { text: '✓ Excellent detail — ready to send',            color: '#fb923c' };
 }
 
-const FEATURES = [
-  { icon: '⚡', title: 'Personalized to your situation',  desc: 'Income, debt, goals, constraints — your plan, not a template.' },
-  { icon: '📸', title: 'Photo & document analysis',       desc: 'Upload a pay stub or bank statement. Actionable coaches on real numbers.' },
-  { icon: '🎙', title: 'Voice input',                     desc: 'Talk through your situation. No typing required.' },
-  { icon: '📈', title: 'Progress tracking',               desc: 'Milestone checklists and streaks keep you moving forward.' },
-  { icon: '💬', title: 'Full chat history',               desc: 'Every session saved. Pick up where you left off.' },
-  { icon: '🤝', title: 'Community stories',               desc: 'Real people who broke out. Post yours when you make it.' },
-];
-
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function Landing() {
   const canvasRef  = useShaderBg();
@@ -245,13 +236,8 @@ export default function Landing() {
           position: 'fixed', top: 24, left: '50%', transform: 'translateX(-50%)',
           zIndex: 50,
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          padding: '12px 24px',
-          borderRadius: menuOpen ? 18 : 9999,
-          border: '1px solid rgba(251,146,60,0.2)',
-          background: 'rgba(20,10,0,0.6)',
-          backdropFilter: 'blur(20px)',
+          padding: '10px 20px',
           width: 'calc(100% - 48px)', maxWidth: 560,
-          transition: 'border-radius 0.3s',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 24 }}>
             <a href="/" style={{ fontSize: 16, fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', textDecoration: 'none' }}>Actionable</a>
@@ -313,7 +299,6 @@ export default function Landing() {
                   display: 'flex', alignItems: 'flex-start', gap: 10,
                   background: 'rgba(249,115,22,0.05)',
                 }}>
-                  <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>⚡</span>
                   <p style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(255,255,255,0.35)', margin: 0 }}>
                     <span style={{ color: 'rgba(253,186,116,0.9)', fontWeight: 700 }}>You have one free message.</span>{' '}
                     Include your exact income, total debt, real goals, and what you've already tried. The more specific, the better your plan.
@@ -418,64 +403,29 @@ export default function Landing() {
           )}
         </div>
 
-        {/* ── Features ── */}
-        <div style={{ maxWidth: 960, margin: '0 auto', padding: '80px 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Everything you need</div>
-            <h2 style={{ fontSize: 'clamp(28px,5vw,48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: 0, color: '#fff' }}>Built for people who move different</h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
-            {FEATURES.map(f => (
-              <div key={f.title} style={{ background: 'rgba(20,10,0,0.6)', border: '1px solid rgba(251,146,60,0.12)', borderRadius: 16, padding: '24px', backdropFilter: 'blur(12px)' }}>
-                <div style={{ fontSize: 24, marginBottom: 12 }}>{f.icon}</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 6 }}>{f.title}</div>
-                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>{f.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* ── Pricing ── */}
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '40px 24px 100px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Simple pricing</div>
-          <h2 style={{ fontSize: 'clamp(28px,5vw,48px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 40px', color: '#fff' }}>One coach. Two plans.</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
-            <div style={{ background: 'rgba(20,10,0,0.6)', border: '1px solid rgba(251,146,60,0.15)', borderRadius: 20, padding: '32px 28px', backdropFilter: 'blur(12px)' }}>
-              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>Basic</div>
-              <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$15</div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', marginBottom: 24 }}>per month</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
-                {['Unlimited AI coaching','Photo & document analysis','Voice input','Full chat history','Progress roadmap','Community stories','Mobile app (PWA)'].map(f => (
-                  <li key={f} style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 8 }}>
-                    <span style={{ color: '#f97316' }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <a href="/signup?plan=basic" style={{ display: 'block', textAlign: 'center', border: '1px solid rgba(251,146,60,0.3)', borderRadius: 10, padding: 14, fontSize: 14, fontWeight: 700, color: '#fdba74', textDecoration: 'none', boxSizing: 'border-box' }}>
-                Get Basic →
-              </a>
-            </div>
-            <div style={{ background: 'linear-gradient(135deg,rgba(249,115,22,0.15),rgba(251,191,36,0.1))', border: '1px solid rgba(251,146,60,0.4)', borderRadius: 20, padding: '32px 28px', backdropFilter: 'blur(12px)' }}>
-              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#fb923c', marginBottom: 12 }}>Pro — Most popular</div>
-              <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$49</div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 24 }}>per month</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px' }}>
-                {['Everything in Basic','Weekly AI progress reports','Priority response speed','Downloadable financial plans','Referral — give & get free months','Early access to features'].map(f => (
-                  <li key={f} style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', padding: '6px 0', borderBottom: '1px solid rgba(251,146,60,0.08)', display: 'flex', gap: 8 }}>
-                    <span style={{ color: '#f97316' }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <a href="/signup?plan=pro" style={{ display: 'block', textAlign: 'center', background: 'linear-gradient(135deg,#f97316,#fbbf24)', borderRadius: 10, padding: 14, fontSize: 14, fontWeight: 700, color: '#000', textDecoration: 'none', boxSizing: 'border-box' }}>
-                Get Pro →
-              </a>
-            </div>
+        <div style={{ maxWidth: 480, margin: '0 auto', padding: '60px 24px 100px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(251,146,60,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12, textAlign: 'center' }}>Simple pricing</div>
+          <h2 style={{ fontSize: 'clamp(28px,5vw,44px)', fontWeight: 900, letterSpacing: '-0.03em', margin: '0 0 32px', color: '#fff', textAlign: 'center' }}>One plan. One coach.</h2>
+          <div style={{ background: 'linear-gradient(135deg,rgba(249,115,22,0.12),rgba(251,191,36,0.07))', border: '1px solid rgba(251,146,60,0.3)', borderRadius: 20, padding: '36px 32px', backdropFilter: 'blur(12px)' }}>
+            <div style={{ fontSize: 56, fontWeight: 900, letterSpacing: '-0.04em', color: '#fff', margin: '0 0 4px' }}>$15</div>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', marginBottom: 28 }}>per month — cancel anytime</div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px' }}>
+              {['Unlimited AI coaching sessions','Photo & document analysis','Voice input','Full chat history','Community stories'].map(f => (
+                <li key={f} style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', padding: '8px 0', borderBottom: '1px solid rgba(251,146,60,0.07)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: '#f97316' }}>✓</span>{f}
+                </li>
+              ))}
+            </ul>
+            <a href="/signup?plan=basic" style={{ display: 'block', textAlign: 'center', background: 'linear-gradient(135deg,#f97316,#fbbf24)', borderRadius: 12, padding: 16, fontSize: 15, fontWeight: 700, color: '#000', textDecoration: 'none' }}>
+              Get started →
+            </a>
           </div>
         </div>
 
         {/* Footer */}
         <footer style={{ borderTop: '1px solid rgba(251,146,60,0.1)', padding: '32px 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)' }}>© {new Date().getFullYear()} Actionable AI. Built for people who move different.</div>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)' }}>© {new Date().getFullYear()} Actionable AI</div>
           <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 12 }}>
             {[['Privacy','/privacy'],['Terms','/terms'],['Stories','/stories']].map(([l,h]) => (
               <a key={l} href={h} style={{ fontSize: 13, color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}>{l}</a>
