@@ -1161,3 +1161,42 @@ h2 {
   .footer-disclaimer { text-align: left; }
   .footer-bottom { flex-direction: column; }
 }
+
+/* ============================================================
+   Legal Sections (Terms / Privacy)
+   ============================================================ */
+.legal-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+}
+.legal-section + .legal-section {
+  border-top: 1px solid var(--border);
+}
+.legal-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.legal-updated {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+.legal-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent2);
+  margin: 28px 0 8px;
+}
+.legal-body h3:first-child { margin-top: 0; }
+.legal-body p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+.legal-body a {
+  color: var(--accent2);
+  text-decoration: underline;
+}
