@@ -3,480 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CallRecoverAI — Stop Losing Jobs to Missed Calls</title>
+  <title>Piehl Digital — AI Systems for Growing Businesses</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="#" class="logo">CallRecover<span>AI</span></a>
+      <a href="#" class="logo">Piehl<span>Digital</span></a>
       <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
         <li><a href="#how">How It Works</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#testimonials">Proof</a></li>
-        <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <a href="#signup" class="btn btn-primary btn-shimmer nav-cta">Get Started Free</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
-    </div>
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="#how">How It Works</a>
-      <a href="#features">Features</a>
-      <a href="#testimonials">Proof</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="#signup" class="btn btn-primary">Get Started</a>
+      <a href="#contact" class="btn btn-primary nav-cta">Get in Touch</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
-      <div class="hero-pill">
-        <span class="hero-pill-dot"></span>
-        AI-powered missed call recovery for service businesses
-      </div>
-      <h1>Miss a Call.<br /><span class="highlight">They're Texted Back in 30 Seconds.</span></h1>
+      <div class="hero-pill">AI Automation &amp; Growth Systems</div>
+      <h1>We Build AI Systems That Help Your Business Grow</h1>
       <p class="hero-sub">
-        Our AI instantly contacts every missed caller — qualifying leads and booking jobs automatically. One saved call pays for months.
+        Piehl Digital installs custom AI-powered automation for service businesses — from lead follow-up to workflow optimization. We handle the tech so you can focus on the work.
       </p>
-      <div class="hero-actions">
-        <a href="#signup" class="btn btn-primary btn-lg btn-shimmer">Add Your Business Number</a>
-        <a href="#how" class="btn btn-ghost btn-lg">See How It Works &#8594;</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <strong>30–50%</strong>
-          <span>of calls go unanswered</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>&lt;30s</strong>
-          <span>average AI response</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>$8,000+</strong>
-          <span>avg value per saved job</span>
-        </div>
-      </div>
+      <a href="#contact" class="btn btn-primary btn-lg">Start a Conversation</a>
     </div>
   </section>
 
-  <!-- DEMO PHONE -->
-  <section class="demo-section">
+  <!-- SERVICES -->
+  <section class="services" id="services">
     <div class="container">
-      <div class="demo-label">Live Example — What Your Customer Sees the Moment You Miss Their Call</div>
-      <div class="demo-phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="chat-header">
-            <div class="chat-avatar">&#127968;</div>
-            <div>
-              <div class="chat-name">ABC Roofing</div>
-              <div class="chat-status">&#128992; Responding now</div>
-            </div>
-          </div>
-          <div class="messages" id="demo-messages">
-            <div class="msg missed">
-              <span>&#128222; Missed call from ABC Roofing</span>
-            </div>
-          </div>
+      <p class="section-label">What We Do</p>
+      <h2>AI Solutions Built for Real Businesses</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#9889;</div>
+          <h3>Lead Response Automation</h3>
+          <p>AI that follows up with new leads instantly — via text, email, or both — so no opportunity goes cold while you're busy doing the job.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128200;</div>
+          <h3>Workflow Automation</h3>
+          <p>Repetitive tasks — scheduling, reminders, follow-ups, reporting — automated so your team spends time on what actually moves the needle.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#129302;</div>
+          <h3>Custom AI Integrations</h3>
+          <p>We connect AI tools to the software you already use — CRMs, calendars, messaging platforms — and make everything talk to each other.</p>
         </div>
       </div>
-      <p class="demo-caption">The moment they miss your call — AI takes over and keeps the lead warm before they dial your competitor.</p>
     </div>
   </section>
-
-  <!-- PROOF BAR -->
-  <div class="proof-bar">
-    <div class="proof-bar-inner">
-      <span class="proof-stat"><strong>&lt;30s</strong> first AI response</span>
-      <span class="proof-divider">|</span>
-      <span class="proof-stat"><strong>24–48hr</strong> setup time</span>
-      <span class="proof-divider">|</span>
-      <span class="proof-stat"><strong>30-Day</strong> money-back guarantee</span>
-      <span class="proof-divider">|</span>
-      <span class="proof-stat"><strong>24/7</strong> automated coverage</span>
-    </div>
-  </div>
 
   <!-- HOW IT WORKS -->
   <section class="how" id="how">
     <div class="container">
-      <div class="section-label">Simple Setup</div>
-      <h2>Live in 3 Steps. We Do the Work.</h2>
-      <p class="section-sub">No coding. No downtime. Your number stays yours.</p>
+      <p class="section-label">The Process</p>
+      <h2>Simple from Day One</h2>
       <div class="steps">
-        <div class="step reveal">
+        <div class="step">
           <div class="step-num">01</div>
-          <div class="step-icon">&#128222;</div>
-          <h3>Connect Your Number</h3>
-          <p>We port your existing number into our system. Same number. Zero downtime. No changes on your end.</p>
+          <h3>Discovery Call</h3>
+          <p>We learn how your business runs, where time is lost, and what growth looks like for you. No templates — custom every time.</p>
         </div>
         <div class="step-arrow">&#8594;</div>
-        <div class="step reveal reveal-delay-1">
+        <div class="step">
           <div class="step-num">02</div>
-          <div class="step-icon">&#129302;</div>
-          <h3>AI Responds Instantly</h3>
-          <p>Miss a call — your customer gets a text in under 30 seconds. AI qualifies them and answers questions naturally.</p>
+          <h3>We Build It</h3>
+          <p>We design and install your AI system. You don't touch a single setting — we handle the full setup and integration.</p>
         </div>
         <div class="step-arrow">&#8594;</div>
-        <div class="step reveal reveal-delay-2">
+        <div class="step">
           <div class="step-num">03</div>
-          <div class="step-icon">&#128176;</div>
-          <h3>Job Gets Booked. You Get Paid.</h3>
-          <p>AI books the appointment directly into your calendar. You show up. The work is done.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES — Tailark-style layout -->
-  <section class="features" id="features">
-    <div class="container">
-      <div class="features-inner">
-
-        <!-- LEFT: Dashboard Mockup -->
-        <div class="dashboard-mockup reveal">
-          <div class="dash-header">
-            <span class="dash-logo">CallRecover<b>AI</b></span>
-            <span class="dash-live-pill">&#11044; LIVE</span>
-          </div>
-          <div class="dash-stats-row">
-            <div class="dash-stat-card">
-              <div class="dash-stat-num" data-count="14">0</div>
-              <div class="dash-stat-label">Leads Today</div>
-            </div>
-            <div class="dash-stat-card highlight">
-              <div class="dash-stat-num">$42k</div>
-              <div class="dash-stat-label">Est. Value</div>
-            </div>
-            <div class="dash-stat-card">
-              <div class="dash-stat-num" data-count="11">0</div>
-              <div class="dash-stat-label">Jobs Booked</div>
-            </div>
-          </div>
-          <div class="dash-section-label">Recent Leads</div>
-          <div class="dash-lead-feed">
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">MR</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Mike R. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Roof inspection — Wed 9am</div>
-              </div>
-              <div class="dash-lead-time">2m ago</div>
-            </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">SL</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Sarah L. <span class="dash-tag pending">Replied</span></div>
-                <div class="dash-lead-meta">HVAC emergency — qualifying</div>
-              </div>
-              <div class="dash-lead-time">8m ago</div>
-            </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">TK</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Tom K. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Plumbing quote — Thu 2pm</div>
-              </div>
-              <div class="dash-lead-time">23m ago</div>
-            </div>
-            <div class="dash-lead">
-              <div class="dash-lead-avatar">DR</div>
-              <div class="dash-lead-info">
-                <div class="dash-lead-name">Dana R. <span class="dash-tag booked">Booked &#10003;</span></div>
-                <div class="dash-lead-meta">Botox consult — Fri 11am</div>
-              </div>
-              <div class="dash-lead-time">41m ago</div>
-            </div>
-          </div>
-          <div class="dash-section-label">Live Conversation</div>
-          <div class="dash-mini-chat">
-            <div class="dash-msg ai-msg">Hi — sorry we missed you. This is ABC Roofing. Still need help?</div>
-            <div class="dash-msg user-msg">Yes, roof is leaking — need someone ASAP</div>
-            <div class="dash-msg ai-msg">On it. What's your zip? I'll get someone out today. &#10003;</div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Feature list -->
-        <div class="features-list reveal reveal-delay-1">
-          <div class="section-label">What You Get</div>
-          <h2>Everything Running While You Work</h2>
-          <p class="features-sub">We do the setup. AI does the follow-up. You do the job.</p>
-          <div class="feature-item">
-            <div class="feature-icon">&#9889;</div>
-            <div>
-              <h4>Instant Text-Back</h4>
-              <p>Fires under 30 seconds. Before they call your competitor down the street.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">&#129302;</div>
-            <div>
-              <h4>AI Qualifies &amp; Books</h4>
-              <p>Asks questions, filters serious leads, drops the job right on your calendar.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">&#128202;</div>
-            <div>
-              <h4>Real-Time Dashboard</h4>
-              <p>See every lead, conversation, and booking in one clean view. Nothing falls through.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">&#128295;</div>
-            <div>
-              <h4>Zero Setup From You</h4>
-              <p>Number porting, AI scripts, calendar sync — we handle all of it in 24 hours.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">&#128197;</div>
-            <div>
-              <h4>Works 24/7 — Even Weekends</h4>
-              <p>After-hours calls, Saturday emergencies, holiday inquiries. All captured.</p>
-            </div>
-          </div>
-          <a href="#signup" class="btn btn-primary btn-shimmer" style="margin-top:8px;">See It In Your Business &#8594;</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- WHO IT'S FOR -->
-  <section class="niches" id="niches">
-    <div class="container">
-      <div class="section-label">Best Fit Industries</div>
-      <h2>If One Job Is Worth $3k–$20k,<br />One Saved Call Pays for Months</h2>
-      <p class="section-sub">We focus on high-ticket service businesses where speed to respond = money.</p>
-      <div class="niche-grid">
-        <div class="niche-card reveal">
-          <div class="niche-icon">&#127968;</div>
-          <h3>Roofing</h3>
-          <p>Avg job: $5k–$20k. One saved lead covers 5+ months of service.</p>
-          <div class="niche-tag">Most Popular</div>
-        </div>
-        <div class="niche-card reveal reveal-delay-1">
-          <div class="niche-icon">&#10052;</div>
-          <h3>HVAC</h3>
-          <p>Emergencies don't wait. First to respond almost always gets the job.</p>
-          <div class="niche-tag">High Urgency</div>
-        </div>
-        <div class="niche-card reveal reveal-delay-2">
-          <div class="niche-icon">&#128295;</div>
-          <h3>Plumbing</h3>
-          <p>Customers call 3–4 companies. Fastest reply wins every time.</p>
-          <div class="niche-tag">Speed Wins</div>
-        </div>
-        <div class="niche-card reveal">
-          <div class="niche-icon">&#128137;</div>
-          <h3>Med Spas</h3>
-          <p>High-margin treatments. Missed inquiries are straight-up lost revenue.</p>
-          <div class="niche-tag">High Margin</div>
-        </div>
-        <div class="niche-card reveal reveal-delay-1">
-          <div class="niche-icon">&#9878;</div>
-          <h3>Law Firms</h3>
-          <p>One client = $5k–$50k. Every missed call is a catastrophic miss.</p>
-          <div class="niche-tag">Ultra High-Ticket</div>
-        </div>
-        <div class="niche-card reveal reveal-delay-2">
-          <div class="niche-icon">&#127968;</div>
-          <h3>Real Estate</h3>
-          <p>Speed to lead is life. AI follows up before the moment is gone.</p>
-          <div class="niche-tag">Lead Speed</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW THE ROI MATH WORKS (replaces fake testimonials) -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <div class="section-label">The ROI Math</div>
-      <h2>One Saved Call Covers Months of Service</h2>
-      <p class="section-sub">Service businesses lose significant revenue to missed calls every week. Here's the simple math.</p>
-      <div class="testimonial-grid">
-        <div class="testimonial-card reveal">
-          <div class="niche-icon" style="font-size:2rem;">&#127968;</div>
-          <h4 style="margin:12px 0 8px;font-size:1.1rem;">Roofing</h4>
-          <p>Average job value: $5,000–$20,000. At Starter pricing, a single recovered job pays for 10+ months of service.</p>
-          <div class="testimonial-roi">1 job = 10+ months covered</div>
-        </div>
-        <div class="testimonial-card testimonial-featured reveal reveal-delay-1">
-          <div class="niche-icon" style="font-size:2rem;">&#10052;</div>
-          <h4 style="margin:12px 0 8px;font-size:1.1rem;">HVAC</h4>
-          <p>Missed after-hours calls are the most expensive leads lost. AI covers nights and weekends so urgent jobs don't go to a competitor.</p>
-          <div class="testimonial-roi">24/7 coverage, no overtime cost</div>
-        </div>
-        <div class="testimonial-card reveal reveal-delay-2">
-          <div class="niche-icon" style="font-size:2rem;">&#128295;</div>
-          <h4 style="margin:12px 0 8px;font-size:1.1rem;">Plumbing</h4>
-          <p>Customers call 3–4 companies and hire the first one that responds. Responding in seconds instead of hours changes the outcome.</p>
-          <div class="testimonial-roi">Speed wins the job</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GUARANTEE -->
-  <section class="guarantee">
-    <div class="container">
-      <div class="guarantee-inner reveal">
-        <div class="guarantee-badge">
-          <div class="guarantee-shield">&#10003;</div>
-          <div>
-            <h3>30-Day Proof Guarantee</h3>
-            <p>If CallRecoverAI doesn't recover at least one paying lead in your first 30 days, we keep working — free — until it does. If you still want out, full refund. No questions. No games. That's the deal.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- URGENCY BAR -->
-  <div class="urgency-bar">
-    <div class="urgency-inner">
-      <span class="urgency-dot"></span>
-      <p><strong>Only 8 onboarding slots open this month.</strong> We personally configure every account — we cap new signups to keep setup quality high.</p>
-      <a href="#signup" class="btn btn-primary btn-sm btn-shimmer">Claim Your Spot &#8594;</a>
-    </div>
-  </div>
-
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="section-label">Simple Pricing</div>
-      <h2>One Missed Call Pays for This</h2>
-      <p class="section-sub">No contracts. Cancel anytime. Live in 24–48 hours.</p>
-      <div class="pricing-grid">
-        <div class="price-card reveal">
-          <div class="price-tier">Starter</div>
-          <div class="price-amount">$497<span>/mo</span></div>
-          <p>Solo operators and small service businesses getting started.</p>
-          <ul class="price-features">
-            <li>&#10003; 1 business number connected</li>
-            <li>&#10003; Instant missed call text-back</li>
-            <li>&#10003; Up to 200 leads/month</li>
-            <li>&#10003; Basic AI responses</li>
-            <li>&#10003; Lead dashboard</li>
-            <li>&#10003; Email support</li>
-          </ul>
-          <a href="#signup" class="btn btn-outline btn-full">Get Started</a>
-        </div>
-        <div class="price-card price-card-featured reveal reveal-delay-1">
-          <div class="price-badge">Most Popular</div>
-          <div class="price-tier">Growth</div>
-          <div class="price-amount">$997<span>/mo</span></div>
-          <p>Growing businesses ready to capture every single opportunity.</p>
-          <ul class="price-features">
-            <li>&#10003; 1 business number (port or new)</li>
-            <li>&#10003; Instant missed call text-back</li>
-            <li>&#10003; Unlimited leads</li>
-            <li>&#10003; Full AI conversation + booking</li>
-            <li>&#10003; Calendar sync</li>
-            <li>&#10003; Call recording &amp; analytics</li>
-            <li>&#10003; Priority support</li>
-          </ul>
-          <a href="#signup" class="btn btn-primary btn-shimmer btn-full">Get Started</a>
-        </div>
-        <div class="price-card reveal reveal-delay-2">
-          <div class="price-tier">Pro</div>
-          <div class="price-amount">$1,997<span>/mo</span></div>
-          <p>Full-service done-for-you with a dedicated account manager.</p>
-          <ul class="price-features">
-            <li>&#10003; Everything in Growth</li>
-            <li>&#10003; Multi-location support</li>
-            <li>&#10003; Custom AI scripts written for you</li>
-            <li>&#10003; CRM integration</li>
-            <li>&#10003; Dedicated account manager</li>
-            <li>&#10003; Monthly strategy calls</li>
-            <li>&#10003; Performance reports</li>
-          </ul>
-          <a href="#signup" class="btn btn-outline btn-full">Get Started</a>
-        </div>
-      </div>
-      <p class="pricing-note">&#128274; No setup fee. No contracts. Includes onboarding call to get you live in 24–48 hours.</p>
-    </div>
-  </section>
-
-  <!-- SIGNUP FORM -->
-  <section class="signup" id="signup">
-    <div class="container">
-      <div class="signup-inner">
-        <div class="signup-left reveal">
-          <div class="section-label">Get Started Today</div>
-          <h2>Add Your Business Number</h2>
-          <p>We'll reach out within 24 hours to complete setup and get your system live. No tech skills required — we handle everything.</p>
-          <ul class="signup-bullets">
-            <li>&#10003; Live in 24–48 hours</li>
-            <li>&#10003; No coding or tech work from you</li>
-            <li>&#10003; We handle number porting</li>
-            <li>&#10003; Cancel anytime — no contracts</li>
-            <li>&#10003; 30-day guarantee included</li>
-          </ul>
-        </div>
-        <div class="signup-right reveal reveal-delay-1">
-          <form class="signup-form" id="signup-form">
-            <div class="form-group">
-              <label for="business-name">Business Name</label>
-              <input type="text" id="business-name" name="business_name" placeholder="ABC Roofing Co." required />
-            </div>
-            <div class="form-group">
-              <label for="owner-name">Your Name</label>
-              <input type="text" id="owner-name" name="owner_name" placeholder="John Smith" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Business Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" placeholder="john@abcroofing.com" required />
-            </div>
-            <div class="form-group">
-              <label for="niche">Your Industry</label>
-              <select id="niche" name="niche" required>
-                <option value="" disabled selected>Select your industry</option>
-                <option value="roofing">Roofing</option>
-                <option value="hvac">HVAC</option>
-                <option value="plumbing">Plumbing</option>
-                <option value="med-spa">Med Spa / Aesthetics</option>
-                <option value="law">Law Firm</option>
-                <option value="real-estate">Real Estate</option>
-                <option value="solar">Solar</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="plan">Choose Your Plan</label>
-              <select id="plan" name="plan" required>
-                <option value="" disabled selected>Select a plan</option>
-                <option value="starter">Starter — $497/mo</option>
-                <option value="growth">Growth — $997/mo (Most Popular)</option>
-                <option value="pro">Pro — $1,997/mo</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary btn-shimmer btn-full btn-lg">
-              Connect My Number &#8594;
-            </button>
-            <p class="form-note">&#128274; Secure. Never sold. We'll contact you within 24 hours.</p>
-          </form>
-          <div class="form-success" id="form-success" style="display:none;">
-            <div class="success-icon">&#10003;</div>
-            <h3>You're In!</h3>
-            <p>We'll reach out within 24 hours to get your system live. Check your email for next steps.</p>
-          </div>
+          <h3>It Runs. You Grow.</h3>
+          <p>Your system goes live. We monitor, optimize, and support it ongoing so performance keeps improving over time.</p>
         </div>
       </div>
     </div>
@@ -485,83 +90,95 @@
   <!-- FAQ -->
   <section class="faq" id="faq">
     <div class="container">
-      <div class="section-label">Questions</div>
-      <h2>Frequently Asked Questions</h2>
+      <p class="section-label">Questions</p>
+      <h2>Frequently Asked</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Do I have to change my existing phone number?
+            What kinds of businesses do you work with?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
-            <p>No. We port your existing number into our system — customers keep calling the same number they always have. Porting takes 24–48 hours with no downtime. If you'd prefer a new number for campaigns, we can set that up too.</p>
+            <p>We primarily work with service businesses — contractors, agencies, consultants, and local businesses — who want to use AI to grow without adding headcount.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            How fast does the AI respond?
+            Do I need to be technical to work with you?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
-            <p>Under 30 seconds. Often under 10. Studies show responding within 5 minutes makes you 9x more likely to close the lead. We're responding in seconds.</p>
+            <p>Not at all. We handle everything on the technical side. You just tell us what you need and we build it.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            What does the text actually say?
+            How long does setup take?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
-            <p>We write custom scripts for your business and industry. A typical opener: "Hey — sorry we missed your call, this is [Business]. How can we help?" It feels personal, not robotic. The AI continues naturally from there.</p>
+            <p>Most systems are live within 1–2 weeks depending on complexity. Simpler automations can be up in a few days.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Is texting missed callers legal?
+            What does it cost?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
-            <p>Yes — when someone calls your business, that creates implied consent for follow-up. Our system only ever contacts people who called you first. We're fully TCPA compliant and include opt-out in all messages.</p>
+            <p>Pricing depends on the scope of what we build. We discuss pricing after the discovery call once we understand what you actually need. No surprise fees.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Do I need to be technical to use this?
+            What's your refund policy?
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-a">
-            <p>Not at all. You fill out the form, we call you, and we handle every piece of the setup. You'll have a live system without touching a single setting.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            What's the 30-day guarantee exactly?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>If we don't recover at least one paying lead in your first 30 days, we keep working for free until we do. If you still want out after that, we refund you completely. No hoops to jump through.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            Can I cancel anytime?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Yes. No contracts, no cancellation fees. Cancel anytime — we'll transfer your number back to your carrier within 48 hours.</p>
+            <p>See our full refund policy in the <a href="#terms">Terms of Service</a> below. In short: if we haven't started work, you get a full refund. Once work has begun, we'll always make it right — we don't disappear on clients.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="cta-final">
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
     <div class="container">
-      <h2>Stop Losing Jobs to Voicemail</h2>
-      <p>The average roofing company loses $50,000–$100,000 a year to missed calls. That ends the moment you connect your number.</p>
-      <a href="#signup" class="btn btn-primary btn-lg btn-shimmer">Get Your System Live — 24hrs</a>
-      <p class="cta-note">No setup fee &bull; No contracts &bull; 30-day guarantee</p>
+      <div class="contact-inner">
+        <div class="contact-left">
+          <p class="section-label">Get Started</p>
+          <h2>Let's Talk About Your Business</h2>
+          <p>Send us a message and we'll get back to you within one business day to set up a call.</p>
+          <a href="mailto:parkerpiehl@gmail.com" class="contact-email">parkerpiehl@gmail.com</a>
+        </div>
+        <div class="contact-right">
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="business">Business Name</label>
+              <input type="text" id="business" name="business" placeholder="Smith Roofing Co." required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="jane@smithroofing.com" required />
+            </div>
+            <div class="form-group">
+              <label for="message">What do you need help with?</label>
+              <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about your business and what you're looking to improve..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          </form>
+          <div class="form-success" id="form-success" style="display:none;">
+            <div class="success-icon">&#10003;</div>
+            <h3>Message Sent</h3>
+            <p>We'll be in touch within one business day.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -572,26 +189,30 @@
       <p class="legal-updated">Last updated: May 1, 2026</p>
       <div class="legal-body">
         <h3>1. Services</h3>
-        <p>CallRecoverAI ("Company", "we", "us") provides AI-powered missed call follow-up and lead management software for service businesses ("Services"). By signing up, you agree to these Terms.</p>
+        <p>Piehl Digital ("Company", "we", "us") provides AI automation consulting, design, and implementation services ("Services") to business clients. By engaging our services or making a payment, you agree to these Terms.</p>
 
-        <h3>2. Payment &amp; Billing</h3>
-        <p>Subscription fees are billed monthly in advance. All fees are in USD. You authorize us to charge your payment method on a recurring monthly basis. We use Stripe to process payments securely — we do not store your card details.</p>
+        <h3>2. Payment</h3>
+        <p>Service fees are agreed upon prior to project start and invoiced accordingly. Recurring service or retainer fees are billed monthly. All fees are in USD. We use Stripe to process payments securely — we do not store your card details.</p>
 
         <h3>3. Refund &amp; Cancellation Policy</h3>
-        <p><strong>30-Day Money-Back Guarantee:</strong> If CallRecoverAI does not recover at least one paying lead within your first 30 days of active service, we will extend your service at no charge until it does, or issue a full refund upon your written request — whichever you prefer.</p>
-        <p>Outside of the guarantee period, subscriptions are non-refundable for the current billing cycle. You may cancel at any time; cancellation stops future charges and takes effect at the end of your current billing period. To cancel, email <a href="mailto:hello@callrecoverai.com">hello@callrecoverai.com</a>.</p>
+        <p><strong>Before work begins:</strong> If you cancel before we have started any work on your project, you are entitled to a full refund of any amounts paid.</p>
+        <p><strong>After work begins:</strong> Once project work has commenced, payments for completed work are non-refundable. If you are unsatisfied with our work, contact us at <a href="mailto:parkerpiehl@gmail.com">parkerpiehl@gmail.com</a> and we will work to resolve the issue. We stand behind our work.</p>
+        <p><strong>Recurring retainers:</strong> Monthly retainer subscriptions may be cancelled at any time with written notice. Cancellation stops future billing at the end of the current billing period. No partial-month refunds.</p>
 
-        <h3>4. Acceptable Use</h3>
-        <p>You agree to use our Services only for lawful purposes and only to contact individuals who have previously called your business number. You are responsible for compliance with all applicable laws, including the TCPA.</p>
+        <h3>4. Delivery</h3>
+        <p>Project timelines are estimated and provided in good faith. We are not liable for delays caused by client-side delays in providing access, feedback, or required materials.</p>
 
-        <h3>5. Limitation of Liability</h3>
-        <p>Our total liability to you for any claim arising from the Services shall not exceed the fees paid in the three months preceding the claim. We are not liable for indirect or consequential damages.</p>
+        <h3>5. Intellectual Property</h3>
+        <p>Upon full payment, the client owns all custom work product we create for them. We retain the right to use general methods and non-proprietary techniques in future work.</p>
 
-        <h3>6. Changes to Terms</h3>
-        <p>We may update these Terms with 14 days' notice by email. Continued use of the Services after that period constitutes acceptance.</p>
+        <h3>6. Limitation of Liability</h3>
+        <p>Our total liability for any claim shall not exceed the total fees paid to us in the three months preceding the claim. We are not liable for indirect or consequential damages.</p>
 
-        <h3>7. Contact</h3>
-        <p>Questions about these Terms: <a href="mailto:hello@callrecoverai.com">hello@callrecoverai.com</a></p>
+        <h3>7. Changes to Terms</h3>
+        <p>We may update these Terms with 14 days' notice by email. Continued use of our services constitutes acceptance.</p>
+
+        <h3>8. Contact</h3>
+        <p><a href="mailto:parkerpiehl@gmail.com">parkerpiehl@gmail.com</a></p>
       </div>
     </div>
   </section>
@@ -603,25 +224,22 @@
       <p class="legal-updated">Last updated: May 1, 2026</p>
       <div class="legal-body">
         <h3>1. Information We Collect</h3>
-        <p>We collect information you provide when signing up (business name, name, phone, email), usage data from your dashboard, and call/message logs generated by our AI system on your behalf.</p>
+        <p>We collect information you provide when contacting us or engaging our services: name, business name, email address, and project details.</p>
 
         <h3>2. How We Use Your Information</h3>
-        <p>We use your information to provide and improve our Services, process payments, send service-related communications, and comply with legal obligations. We do not sell your data.</p>
+        <p>We use your information to deliver our services, communicate with you about your project, process payments, and improve our offerings. We do not sell your data to third parties.</p>
 
-        <h3>3. Data Sharing</h3>
-        <p>We share data only with service providers necessary to operate our platform (e.g., Stripe for payments, Twilio for messaging). All providers are contractually bound to protect your data.</p>
+        <h3>3. Payment Data</h3>
+        <p>Payment information is processed by Stripe. We never see or store your full card details.</p>
 
         <h3>4. Data Retention</h3>
-        <p>We retain your account data for the duration of your subscription plus 90 days. Message logs are retained for 12 months or as required by law.</p>
+        <p>We retain client information for the duration of our engagement plus three years for record-keeping purposes, or as required by law.</p>
 
         <h3>5. Your Rights</h3>
-        <p>You may request access to, correction of, or deletion of your personal data at any time by emailing <a href="mailto:hello@callrecoverai.com">hello@callrecoverai.com</a>.</p>
+        <p>You may request access to, correction of, or deletion of your personal data by emailing <a href="mailto:parkerpiehl@gmail.com">parkerpiehl@gmail.com</a>.</p>
 
-        <h3>6. Security</h3>
-        <p>We use industry-standard encryption and security practices to protect your data. Payment information is handled exclusively by Stripe and never stored on our servers.</p>
-
-        <h3>7. Contact</h3>
-        <p>Privacy questions: <a href="mailto:hello@callrecoverai.com">hello@callrecoverai.com</a></p>
+        <h3>6. Contact</h3>
+        <p><a href="mailto:parkerpiehl@gmail.com">parkerpiehl@gmail.com</a></p>
       </div>
     </div>
   </section>
@@ -631,33 +249,28 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a href="#" class="logo">CallRecover<span>AI</span></a>
-          <p>Turning missed calls into booked jobs for local service businesses.</p>
+          <a href="#" class="logo">Piehl<span>Digital</span></a>
+          <p>AI systems for growing businesses.</p>
+          <a href="mailto:parkerpiehl@gmail.com" class="footer-email">parkerpiehl@gmail.com</a>
         </div>
         <div class="footer-links">
           <div class="footer-col">
-            <h4>Product</h4>
+            <h4>Company</h4>
+            <a href="#services">Services</a>
             <a href="#how">How It Works</a>
-            <a href="#features">Features</a>
-            <a href="#niches">Industries</a>
-            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
           </div>
           <div class="footer-col">
             <h4>Legal</h4>
-            <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>
             <a href="#terms">Refund Policy</a>
-          </div>
-          <div class="footer-col">
-            <h4>Contact</h4>
-            <a href="mailto:hello@callrecoverai.com">hello@callrecoverai.com</a>
-            <a href="#signup">Book a Call</a>
+            <a href="#privacy">Privacy Policy</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 CallRecoverAI. All rights reserved.</p>
-        <p class="footer-disclaimer">TCPA compliant — we only contact people who called your business first.</p>
+        <p>&copy; 2026 Piehl Digital. All rights reserved.</p>
       </div>
     </div>
   </footer>
